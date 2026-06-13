@@ -18,7 +18,6 @@ $sections = [
         'label' => 'Katalog',
         'items' => [
             ['url' => 'kategori_batik.php', 'icon' => '🎨', 'label' => 'Kategori Batik'],
-            ['url' => 'gambar_batik.php', 'icon' => '🖼️', 'label' => 'Galeri Gambar'],
         ]
     ],
     'customers' => [
