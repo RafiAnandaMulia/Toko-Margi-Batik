@@ -1,0 +1,103 @@
+/* ==========================================================================
+   GLOBAL SITE FOOTER - FIXED & MENETAP (100% KUSTOM TANPA BOOTSTRAP)
+   ========================================================================== */
+
+/* Jarak aman global agar konten halaman tidak tertutup oleh footer yang menetap */
+body {
+    padding-bottom: 70px !important; 
+}
+
+/* 1. Footer Container Utama (Mengunci di Bawah Layar) */
+.site-footer {
+    position: fixed;   /* Membuat footer menetap diam di layar */
+    bottom: 0;         /* Mengunci di posisi paling bawah */
+    left: 0;           /* Menempel di batas kiri */
+    width: 100%;       /* Membentang penuh dari kiri ke kanan */
+    background-color: #ffffff;
+    border-top: 1px solid #eae0d5;
+    padding: 16px 0;
+    z-index: 9999;     /* Memastikan selalu berada di lapisan paling atas */
+}
+
+/* 2. Pembungkus Konten Kontainer */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between; /* Konten terbagi rata kiri dan kanan */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+/* 3. Footer Bagian Kiri (Brand & Identitas AI) */
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    font-size: 14px;
+    font-weight: 700;
+    color: #5C2D00; /* Warna cokelat khas Margi Batik */
+}
+
+.footer-text {
+    font-size: 13px;
+    color: #64748b;
+    position: relative;
+    padding-left: 12px;
+}
+
+/* Garis pembatas vertikal antara brand dan deskripsi di layar PC/Laptop */
+@media screen and (min-width: 481px) {
+    .footer-text::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 14px;
+        background-color: #cbd5e1;
+    }
+}
+
+/* 4. Footer Bagian Kanan (Hak Cipta & Powered) */
+.footer-right {
+    display: flex;
+    align-items: center;
+}
+
+.footer-copy {
+    font-size: 13px;
+    color: #94a3b8;
+    text-align: right;
+}
+
+/* 5. Responsive Web Design (Mobile Layout - HP) */
+@media screen and (max-width: 480px) {
+    .footer-container {
+        flex-direction: column; /* Berubah menjadi susunan vertikal dari atas ke bawah */
+        text-align: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .footer-left {
+        flex-direction: column;
+        gap: 4px;
+        justify-content: center;
+    }
+
+    .footer-text {
+        padding-left: 0;
+    }
+
+    .footer-copy {
+        text-align: center;
+    }
+}

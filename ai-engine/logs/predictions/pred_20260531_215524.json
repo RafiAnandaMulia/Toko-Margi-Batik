@@ -1,0 +1,35 @@
+{
+  "predicted_class": "sasirangan",
+  "confidence": 25.4,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "sasirangan",
+      "confidence": 25.4
+    },
+    {
+      "rank": 2,
+      "class_name": "cendrawasih",
+      "confidence": 20.43
+    },
+    {
+      "rank": 3,
+      "class_name": "dayak",
+      "confidence": 19.71
+    },
+    {
+      "rank": 4,
+      "class_name": "sekar",
+      "confidence": 11.62
+    },
+    {
+      "rank": 5,
+      "class_name": "sumatera_utara_boraspati",
+      "confidence": 7.61
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\a72483c6fd7e4bcb9fa83aacc8f6e59d_klasifikasi_6a1c4bd3a7ebf.jpg",
+  "timestamp": "2026-05-31T21:55:24.710531",
+  "num_classes": 17
+}

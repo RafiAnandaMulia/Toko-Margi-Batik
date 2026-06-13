@@ -1,0 +1,240 @@
+/* ==========================================================================
+   website/assets/css/sidebar_admin.css
+   Versi Slim 200px + Sinkronisasi Elegan dengan Fixed Footer
+   ========================================================================== */
+
+:root {
+    --sb-width: 200px; 
+    --soga-dark: #2B1600; 
+    --soga-main: #7B3F00;
+}
+
+/* ── LAYOUT UTAMA SIDEBAR ────────────────────────── */
+.admin-sidebar {
+    width: var(--sb-width);
+    /* Kurangi tinggi sidebar sedikit di desktop agar tidak menabrak / tenggelam di bawah footer */
+    height: calc(100vh - 54px); 
+    background: var(--soga-dark);
+    color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    /* Naikkan z-index menjadi lebih tinggi dari footer global (9999) */
+    z-index: 10000; 
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ── BRANDING AREA ───────────────────────────────── */
+.sidebar-brand {
+    padding: 16px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    background: #ffffff;
+    padding: 2px;
+    border-radius: 6px;
+}
+
+.sidebar-brand-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.sidebar-brand-sub {
+    font-size: 0.65rem;
+    color: #C5B3A1;
+}
+
+/* ── NAVIGASI MENU (COMPACT) ─────────────────────── */
+.sidebar-nav {
+    padding: 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sidebar-section-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #7D634B;
+    padding: 4px 8px;
+    font-weight: 700;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    color: #C5B3A1;
+    text-decoration: none;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.sidebar-icon {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    width: 18px;
+}
+
+.sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+.sidebar-link.active {
+    background: var(--soga-main);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* ── FOOTER USER & LOGOUT AREA ───────────────────── */
+.sidebar-footer {
+    padding: 12px 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.20);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+}
+
+.avatar-circle-sm {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #54310C;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.sidebar-user-info { display: flex; flex-direction: column; min-width: 0; }
+.sidebar-user-name { font-size: 0.75rem; font-weight: 600; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-user-role { font-size: 0.65rem; color: #8C7660; }
+
+/* Tombol Logout Kustom Simpel & Kontras */
+.sidebar-logout {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 6px;
+    background: rgba(239, 68, 68, 0.15); /* Merah transparan tipis */
+    color: #fca5a5;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.sidebar-logout:hover { 
+    background: #dc2626; /* Merah tegas saat diarahkan kursor */
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+/* ── ATURAN TOMBOL PEMICU MOBILE (DEFAULT HIDDEN) ── */
+.floating-menu-btn, .sidebar-close-btn, .sidebar-overlay {
+    display: none;
+}
+
+/* =====================================================
+   SINKRONISASI MEDIA QUERY LAYOUT UTAMA 
+===================================================== */
+
+/* TAMPILAN MONITOR DESKTOP (> 768px) */
+@media (min-width: 769px) {
+    .admin-main {
+        margin-left: var(--sb-width) !important;
+    }
+}
+
+/* TAMPILAN HANDPHONE / TABLET (<= 768px) */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+        height: 100vh; /* Kembalikan ke Full Screen saat di HP */
+    }
+
+    .admin-sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .floating-menu-btn {
+        display: block;
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 99;
+        background: var(--soga-main);
+        color: #ffffff;
+        border: none;
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .sidebar-close-btn {
+        display: block;
+        background: transparent;
+        color: #C5B3A1;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 4px;
+    }
+    .sidebar-close-btn:hover { color: #ffffff; }
+
+    .sidebar-overlay.show {
+        display: block;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        z-index: 999;
+    }
+
+    .admin-main {
+        margin-left: 0 !important;
+        padding-top: 50px;
+    }
+}

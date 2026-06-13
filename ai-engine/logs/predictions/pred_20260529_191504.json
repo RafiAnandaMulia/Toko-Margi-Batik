@@ -1,0 +1,35 @@
+{
+  "predicted_class": "yogyakarta_kawung",
+  "confidence": 84.87,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "yogyakarta_kawung",
+      "confidence": 84.87
+    },
+    {
+      "rank": 2,
+      "class_name": "dayak",
+      "confidence": 8.83
+    },
+    {
+      "rank": 3,
+      "class_name": "ntb_lumbung",
+      "confidence": 2.78
+    },
+    {
+      "rank": 4,
+      "class_name": "sogan",
+      "confidence": 1.35
+    },
+    {
+      "rank": 5,
+      "class_name": "corak_insang",
+      "confidence": 0.45
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\ae5cabe70c8048519518ce16b52ad68c_klasifikasi_6a19832d9302b.webp",
+  "timestamp": "2026-05-29T19:15:04.004171",
+  "num_classes": 17
+}

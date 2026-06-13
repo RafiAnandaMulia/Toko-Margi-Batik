@@ -1,0 +1,35 @@
+{
+  "predicted_class": "jawa_barat_megamendung",
+  "confidence": 99.93,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "jawa_barat_megamendung",
+      "confidence": 99.93
+    },
+    {
+      "rank": 2,
+      "class_name": "yogyakarta_parang",
+      "confidence": 0.04
+    },
+    {
+      "rank": 3,
+      "class_name": "solo_parang",
+      "confidence": 0.01
+    },
+    {
+      "rank": 4,
+      "class_name": "corak_insang",
+      "confidence": 0.01
+    },
+    {
+      "rank": 5,
+      "class_name": "bali_barong",
+      "confidence": 0.0
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\8c7ec1efb3ea41af9c46c95915f0c59d_klasifikasi_6a1983a71d785.webp",
+  "timestamp": "2026-05-29T19:16:58.578699",
+  "num_classes": 17
+}

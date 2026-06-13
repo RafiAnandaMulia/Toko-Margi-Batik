@@ -1,0 +1,23 @@
+                             precision    recall  f1-score   support
+
+                bali_barong       1.00      0.65      0.79        54
+                cendrawasih       0.80      0.97      0.88       116
+               corak_insang       1.00      1.00      1.00        58
+                      dayak       0.89      0.88      0.88       116
+        jakarta_ondel_ondel       0.91      0.98      0.95        44
+     jawa_barat_megamendung       1.00      0.97      0.98       162
+         madura_mataketeran       0.97      0.99      0.98        67
+                ntb_lumbung       0.99      0.95      0.97        73
+                 papua_tifa       0.98      0.90      0.94        72
+                 sasirangan       0.99      0.93      0.96       100
+                      sekar       1.00      0.86      0.93        36
+                      sogan       0.91      0.96      0.94       100
+                solo_parang       0.93      0.95      0.94       240
+sumatera_barat_rumah_minang       0.92      0.98      0.95        66
+   sumatera_utara_boraspati       0.94      0.98      0.96        63
+          yogyakarta_kawung       0.97      1.00      0.98       112
+          yogyakarta_parang       0.93      0.88      0.90        72
+
+                   accuracy                           0.94      1551
+                  macro avg       0.95      0.93      0.94      1551
+               weighted avg       0.94      0.94      0.94      1551

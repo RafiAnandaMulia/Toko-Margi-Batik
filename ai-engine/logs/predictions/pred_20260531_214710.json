@@ -1,0 +1,35 @@
+{
+  "predicted_class": "jawa_barat_megamendung",
+  "confidence": 38.3,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "jawa_barat_megamendung",
+      "confidence": 38.3
+    },
+    {
+      "rank": 2,
+      "class_name": "ntb_lumbung",
+      "confidence": 19.07
+    },
+    {
+      "rank": 3,
+      "class_name": "sasirangan",
+      "confidence": 9.44
+    },
+    {
+      "rank": 4,
+      "class_name": "corak_insang",
+      "confidence": 8.84
+    },
+    {
+      "rank": 5,
+      "class_name": "madura_mataketeran",
+      "confidence": 6.38
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\16ee386b34d6491bbc8caea783400180_klasifikasi_6a1c49e4e5e9b.jpg",
+  "timestamp": "2026-05-31T21:47:10.090903",
+  "num_classes": 17
+}

@@ -1,0 +1,247 @@
+/* ==========================================================================
+   CUSTOMER DASHBOARD - STYLE UTAMA (FINAL INTEGRASI MARGI BATIK)
+   ========================================================================== */
+
+/* Reset & Base Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: #334155;
+    line-height: 1.6;
+}
+
+/* Layout Utilities */
+.page-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.section-block {
+    padding: 80px 0;
+    position: relative;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #5C2D00;
+}
+
+/* Lencana / Badge Mitra Penelitian */
+.mitra-badge {
+    display: inline-block;
+    background: #f5ebe0;
+    color: #5C2D00;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border: 1px solid #eae0d5;
+    box-shadow: 0 2px 5px rgba(92, 45, 0, 0.02);
+}
+
+/* Custom Buttons (Margi Batik Theme) */
+.btn-primary-custom {
+    display: inline-block;
+    background: #7B3F00;
+    color: #ffffff !important;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 2px solid #7B3F00;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(123, 63, 0, 0.15);
+}
+
+.btn-primary-custom:hover {
+    background: #5C2D00;
+    border-color: #5C2D00;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(92, 45, 0, 0.25);
+}
+
+.btn-secondary-custom {
+    display: inline-block;
+    background: #ffffff;
+    color: #475569 !important;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 1px solid #cbd5e1;
+    text-align: center;
+}
+
+.btn-secondary-custom:hover {
+    background: #f8fafc;
+    color: #1e293b !important;
+    border-color: #94a3b8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Hero Section */
+.hero-section {
+    background: radial-gradient(circle at top right, #fdfbfc, #F8F4F0);
+    padding: 80px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 48px;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 650px;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    color: #5C2D00;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.05rem;
+    color: #475569;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 350px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 25px rgba(92, 45, 0, 0.08));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Grid & Card Edukasi Ragam Nusantara */
+.edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.edu-card {
+    background: #ffffff;
+    border: 1px solid #eae0d5;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(92, 45, 0, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.edu-card h3 {
+    color: #5C2D00;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.edu-card p {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.edu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(92, 45, 0, 0.07);
+    border-color: #d6c7b7;
+}
+
+/* Klasifikasi / Upload Card */
+.upload-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(92, 45, 0, 0.04);
+    border: 1px solid #eae0d5;
+    transition: transform 0.3s ease;
+}
+
+/* Dropzone Area Interaktif */
+.dropzone-area {
+    border: 2px dashed #cbd5e1;
+    padding: 40px 20px;
+    border-radius: 12px;
+    background: #fafafa;
+    cursor: pointer;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.dropzone-area:hover {
+    border-color: #7B3F00;
+    background: #fdfbfc;
+}
+
+.dropzone-area.dragover {
+    border-color: #5C2D00;
+    background: #f5ebe0;
+}
+
+/* Pratinjau Citra */
+.preview-container {
+    display: none;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.preview-image {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #eae0d5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}

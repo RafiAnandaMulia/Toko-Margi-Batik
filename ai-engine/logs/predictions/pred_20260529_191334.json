@@ -1,0 +1,35 @@
+{
+  "predicted_class": "bali_barong",
+  "confidence": 62.81,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "bali_barong",
+      "confidence": 62.81
+    },
+    {
+      "rank": 2,
+      "class_name": "cendrawasih",
+      "confidence": 34.68
+    },
+    {
+      "rank": 3,
+      "class_name": "sumatera_utara_boraspati",
+      "confidence": 0.77
+    },
+    {
+      "rank": 4,
+      "class_name": "dayak",
+      "confidence": 0.52
+    },
+    {
+      "rank": 5,
+      "class_name": "sekar",
+      "confidence": 0.35
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\f1d45689d941437c82cffdfa04dc8fac_klasifikasi_6a1982db7dec7.jpg",
+  "timestamp": "2026-05-29T19:13:34.513528",
+  "num_classes": 17
+}

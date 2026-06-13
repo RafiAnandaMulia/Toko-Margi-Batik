@@ -1,0 +1,181 @@
+{
+  "bali_barong": {
+    "total": 440,
+    "train": 308,
+    "validation": 88,
+    "test": 44,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.0
+  },
+  "cendrawasih": {
+    "total": 870,
+    "train": 609,
+    "validation": 174,
+    "test": 87,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.0
+  },
+  "corak_insang": {
+    "total": 423,
+    "train": 296,
+    "validation": 84,
+    "test": 43,
+    "train_pct": 70.0,
+    "val_pct": 19.9,
+    "test_pct": 10.2
+  },
+  "dayak": {
+    "total": 870,
+    "train": 609,
+    "validation": 174,
+    "test": 87,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.0
+  },
+  "jakarta_ondel_ondel": {
+    "total": 312,
+    "train": 218,
+    "validation": 62,
+    "test": 32,
+    "train_pct": 69.9,
+    "val_pct": 19.9,
+    "test_pct": 10.3
+  },
+  "jawa_barat_megamendung": {
+    "total": 1206,
+    "train": 844,
+    "validation": 241,
+    "test": 121,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.0
+  },
+  "madura_mataketeran": {
+    "total": 495,
+    "train": 346,
+    "validation": 99,
+    "test": 50,
+    "train_pct": 69.9,
+    "val_pct": 20.0,
+    "test_pct": 10.1
+  },
+  "ntb_lumbung": {
+    "total": 540,
+    "train": 378,
+    "validation": 108,
+    "test": 54,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.0
+  },
+  "papua_tifa": {
+    "total": 522,
+    "train": 365,
+    "validation": 104,
+    "test": 53,
+    "train_pct": 69.9,
+    "val_pct": 19.9,
+    "test_pct": 10.2
+  },
+  "sasirangan": {
+    "total": 750,
+    "train": 525,
+    "validation": 150,
+    "test": 75,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.0
+  },
+  "sekar": {
+    "total": 252,
+    "train": 176,
+    "validation": 50,
+    "test": 26,
+    "train_pct": 69.8,
+    "val_pct": 19.8,
+    "test_pct": 10.3
+  },
+  "sogan": {
+    "total": 750,
+    "train": 525,
+    "validation": 150,
+    "test": 75,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.0
+  },
+  "solo_parang": {
+    "total": 1788,
+    "train": 1251,
+    "validation": 357,
+    "test": 180,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.1
+  },
+  "sumatera_barat_rumah_minang": {
+    "total": 486,
+    "train": 340,
+    "validation": 97,
+    "test": 49,
+    "train_pct": 70.0,
+    "val_pct": 20.0,
+    "test_pct": 10.1
+  },
+  "sumatera_utara_boraspati": {
+    "total": 459,
+    "train": 321,
+    "validation": 91,
+    "test": 47,
+    "train_pct": 69.9,
+    "val_pct": 19.8,
+    "test_pct": 10.2
+  },
+  "yogyakarta_kawung": {
+    "total": 828,
+    "train": 579,
+    "validation": 165,
+    "test": 84,
+    "train_pct": 69.9,
+    "val_pct": 19.9,
+    "test_pct": 10.1
+  },
+  "yogyakarta_parang": {
+    "total": 522,
+    "train": 365,
+    "validation": 104,
+    "test": 53,
+    "train_pct": 69.9,
+    "val_pct": 19.9,
+    "test_pct": 10.2
+  },
+  "_summary": {
+    "total_images": 11513,
+    "total_train": 8055,
+    "total_val": 2298,
+    "total_test": 1160,
+    "n_classes": 17,
+    "classes": [
+      "bali_barong",
+      "cendrawasih",
+      "corak_insang",
+      "dayak",
+      "jakarta_ondel_ondel",
+      "jawa_barat_megamendung",
+      "madura_mataketeran",
+      "ntb_lumbung",
+      "papua_tifa",
+      "sasirangan",
+      "sekar",
+      "sogan",
+      "solo_parang",
+      "sumatera_barat_rumah_minang",
+      "sumatera_utara_boraspati",
+      "yogyakarta_kawung",
+      "yogyakarta_parang"
+    ]
+  }
+}

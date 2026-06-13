@@ -1,0 +1,130 @@
+/* ==========================================================================
+   STYLE CORE NAVBAR (DESKTOP VERSION)
+   ========================================================================== */
+#customerNavbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eae0d5;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(92, 45, 0, 0.03);
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+/* Brand / Logo Style */
+.navbar-brand-custom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.brand-name-customer {
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+    color: #5C2D00;
+}
+
+.brand-tagline {
+    display: block;
+    font-size: 11px;
+    color: #a0522d;
+    letter-spacing: 0.5px;
+}
+
+/* Menu Navigasi Utama */
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu a {
+    text-decoration: none;
+    color: #475569;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    padding: 8px 4px;
+    position: relative;
+}
+
+.navbar-menu a:hover, 
+.navbar-menu a.active {
+    color: #7B3F00;
+}
+
+/* Underline dekoratif untuk menu aktif */
+.navbar-menu a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background-color: #7B3F00;
+    border-radius: 2px;
+}
+
+/* Tombol Masuk / Actions */
+.navbar-actions .btn-batik,
+.mobile-action-li .btn-batik {
+    display: inline-block;
+    background-color: #7B3F00;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
+}
+
+.navbar-actions .btn-batik:hover,
+.mobile-action-li .btn-batik:hover {
+    background-color: #5C2D00;
+}
+
+/* Sembunyikan item mobile-only di desktop */
+.mobile-action-li {
+    display: none;
+}
+
+/* Tombol Hamburger (Default Tersembunyi) */
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.navbar-toggle .icon-bar {
+    width: 100%;
+    height: 2px;
+    background-color: #5C2D00;
+    transition: all 0.25s ease;
+}

@@ -1,0 +1,35 @@
+{
+  "predicted_class": "jawa_barat_megamendung",
+  "confidence": 99.99,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "jawa_barat_megamendung",
+      "confidence": 99.99
+    },
+    {
+      "rank": 2,
+      "class_name": "sekar",
+      "confidence": 0.0
+    },
+    {
+      "rank": 3,
+      "class_name": "solo_parang",
+      "confidence": 0.0
+    },
+    {
+      "rank": 4,
+      "class_name": "dayak",
+      "confidence": 0.0
+    },
+    {
+      "rank": 5,
+      "class_name": "sumatera_utara_boraspati",
+      "confidence": 0.0
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\9283e489c69741beb9d37af6408f1e27_klasifikasi_6a1c4a3b4ed10.jpg",
+  "timestamp": "2026-05-31T21:48:36.807372",
+  "num_classes": 17
+}

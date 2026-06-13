@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "current_epoch": 50,
+  "total_epochs": 50,
+  "percentage": 100.0,
+  "metrics": {},
+  "message": "Resume training berhasil diselesaikan!",
+  "timestamp": "2026-05-29T13:48:15.083985",
+  "phase": "transfer_learning"
+}

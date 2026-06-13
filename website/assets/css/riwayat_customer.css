@@ -1,0 +1,452 @@
+/* ==========================================================================
+   website/assets/css/riwayat_customer.css
+   Desain Kustom Murni Premium Tanpa Framework Untuk Panel Riwayat Admin
+   ========================================================================== */
+
+/* ── LAYOUT DASAR ──────────────────────────────────────────────────────── */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fcfaf7; /* Nuansa krem bersih */
+    margin: 0;
+    padding: 0;
+    color: #334155;
+}
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ── PAGE HEADER & BREADCRUMB ───────────────────────────────────────────── */
+.page-header-container {
+    padding: 8px 4px 20px 4px;
+}
+
+.custom-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.custom-breadcrumb a {
+    color: #7B3F00;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.custom-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.custom-breadcrumb .divider {
+    color: #cbd5e1;
+}
+
+.custom-breadcrumb .active {
+    color: #64748b;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2B1600;
+    margin: 0 0 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-title i {
+    color: #7B3F00;
+}
+
+.page-subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ── KARTU CONTAINER (CARD) ────────────────────────────────────────────── */
+.admin-card {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #eae0d5;
+    box-shadow: 0 2px 12px rgba(123, 63, 0, 0.03);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.card-body-custom {
+    padding: 16px 20px;
+}
+
+/* ── GRID FILTER & SEARCH ──────────────────────────────────────────────── */
+.filter-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.custom-form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #5C2D00;
+    margin-bottom: 6px;
+}
+
+/* Input Search Box */
+.custom-input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.custom-input-group:focus-within {
+    border-color: #7B3F00;
+    box-shadow: 0 0 0 3px rgba(123, 63, 0, 0.1);
+}
+
+.input-group-icon {
+    padding: 0 10px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+}
+
+.custom-form-control {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 8px 10px 8px 0;
+    font-size: 13px;
+    color: #334155;
+    background: transparent;
+}
+
+/* Dropdown Select */
+.custom-form-select {
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: #334155;
+    outline: none;
+    background-color: #ffffff;
+    transition: border-color 0.2s;
+}
+
+.custom-form-select:focus {
+    border-color: #7B3F00;
+}
+
+/* Tombol Aksi */
+.filter-col-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    height: 33px;
+    box-sizing: border-box;
+}
+
+.btn-primary-custom {
+    background-color: #7B3F00;
+    color: #ffffff;
+    border: none;
+    flex: 1;
+}
+
+.btn-primary-custom:hover {
+    background-color: #5C2D00;
+}
+
+.btn-outline-custom {
+    background-color: #ffffff;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+    width: 38px;
+    padding: 0;
+}
+
+.btn-outline-custom:hover {
+    background-color: #f1f5f9;
+    color: #334155;
+    border-color: #94a3b8;
+}
+
+/* ── TABEL DESAIN KUSTOM ────────────────────────────────────────────────── */
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+}
+
+.custom-table th {
+    background-color: #f8f1ea;
+    color: #5C2D00;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-bottom: 2px solid #eae0d5;
+    white-space: nowrap;
+}
+
+.custom-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #fdfcfb;
+}
+
+/* Gaya Khusus Tiap Kolom */
+.col-number {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.col-datetime {
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.col-datetime .date-text {
+    display: block;
+    font-weight: 500;
+}
+
+.col-datetime .time-text {
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+.cust-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.cust-email {
+    font-size: 11px;
+    color: #64748b;
+}
+
+/* Desain Preview Thumbnail Gambar */
+.image-preview-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.img-thumbnail-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-thumbnail-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.filename-text {
+    font-size: 11px;
+    color: #64748b;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Progres Bar Akurasi (Confidence) */
+.confidence-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.confidence-bar-bg {
+    width: 60px;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.confidence-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7B3F00, #D4A017);
+    border-radius: 10px;
+}
+
+.confidence-number {
+    font-weight: 700;
+    color: #5C2D00;
+}
+
+.category-subtext {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* Empty State */
+.table-empty-state {
+    text-align: center;
+    padding: 48px 0 !important;
+    color: #94a3b8;
+}
+
+.table-empty-state i {
+    font-size: 36px;
+    color: #cbd5e1;
+}
+
+.table-empty-state p {
+    margin: 8px 0 0 0;
+    font-size: 14px;
+}
+
+/* ── BADGE STATUS KUSTOM ────────────────────────────────────────────────── */
+.badge-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.badge-predicted {
+    background-color: #f5ece3;
+    color: #7B3F00;
+    border: 1px solid #e1d2c3;
+}
+
+.badge-status-null {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.badge-status-true {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.badge-status-false {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ── PAGINATION AREA ────────────────────────────────────────────────────── */
+.pagination-container {
+    padding: 16px 20px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: #fafafa;
+}
+
+.custom-pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 4px;
+}
+
+.page-item-custom a, .page-item-custom span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+    text-decoration: none;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background: #ffffff;
+    transition: all 0.2s;
+}
+
+.page-item-custom a:hover {
+    border-color: #7B3F00;
+    color: #7B3F00;
+    background: #fdfcfb;
+}
+
+.page-item-custom.active a {
+    background-color: #7B3F00;
+    color: #ffffff;
+    border-color: #7B3F00;
+}
+
+.page-item-custom.disabled span {
+    color: #cbd5e1;
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+/* ── RESPONSIVE WEB DESIGN (MEDIA QUERIES) ──────────────────────────────── */
+@media screen and (max-width: 768px) {
+    .filter-grid {
+        grid-template-columns: 1fr; /* Stack filter jadi 1 kolom di HP */
+        gap: 12px;
+    }
+    
+    .filter-col-buttons {
+        margin-top: 4px;
+    }
+    
+    .page-title {
+        font-size: 20px;
+    }
+}

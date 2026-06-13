@@ -1,0 +1,35 @@
+{
+  "predicted_class": "sekar",
+  "confidence": 49.01,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "sekar",
+      "confidence": 49.01
+    },
+    {
+      "rank": 2,
+      "class_name": "solo_parang",
+      "confidence": 19.1
+    },
+    {
+      "rank": 3,
+      "class_name": "jawa_barat_megamendung",
+      "confidence": 17.91
+    },
+    {
+      "rank": 4,
+      "class_name": "madura_mataketeran",
+      "confidence": 3.31
+    },
+    {
+      "rank": 5,
+      "class_name": "ntb_lumbung",
+      "confidence": 2.54
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\2be27fe9774b4ba7a642d82c2279898b_klasifikasi_6a1c5bcd6ffde.jpg",
+  "timestamp": "2026-05-31T23:03:39.606918",
+  "num_classes": 17
+}

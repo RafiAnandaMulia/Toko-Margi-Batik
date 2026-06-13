@@ -1,0 +1,232 @@
+/* ==========================================================================
+   HALAMAN KLASIFIKASI - KOMPONEN BERKAS & PREDIKSI CNN
+   ========================================================================== */
+
+/* Wrapper Utama Konten */
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Kotak Notifikasi Eror */
+.error-box {
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Kotak Pratinjau Gambar */
+.preview-box-wrapper {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.preview-box-wrapper img {
+    max-width: 100%;
+    max-height: 280px;
+    border-radius: 12px;
+    object-fit: contain;
+    border: 2px solid #e8d8c0;
+}
+
+.preview-filename {
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+}
+
+/* Kartu Utama Hasil Klasifikasi */
+.result-card {
+    background: #ffffff;
+    border: 1px solid #e8d8c0;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.result-layout {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.result-image {
+    flex: 0 0 auto;
+}
+
+.result-image img {
+    width: 160px;
+    height: 160px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.result-content {
+    flex: 1;
+    min-width: 250px;
+}
+
+.status-success {
+    font-size: 13px;
+    color: #16a34a;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.predicted-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #5C2D00;
+    margin-bottom: 10px;
+}
+
+.predicted-desc {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+}
+
+.origin-badge {
+    display: inline-block;
+    background: #f0fdf4;
+    color: #166534;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Progress Bar Keyakinan Model MobileNetV2 */
+.confidence-info {
+    font-size: 13px;
+    font-weight: 600;
+    color: #5C2D00;
+    margin-bottom: 6px;
+}
+
+.confidence-bar-container {
+    background: #e2e8f0;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.confidence-bar-fill {
+    background: #7B3F00;
+    height: 100%;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Panel Klasifikasi Alternatif (Top Predictions) */
+.alt-predictions-panel {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e8d8c0;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.alt-predictions-header {
+    background: linear-gradient(90deg, #7B3F00, #A0522D);
+    color: #ffffff;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.alt-predictions-body {
+    padding: 20px;
+}
+
+.alt-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.alt-row:last-child {
+    margin-bottom: 0;
+}
+
+.alt-rank {
+    width: 24px;
+    height: 24px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.alt-bar-wrapper {
+    flex: 1;
+}
+
+.alt-class-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+}
+
+.alt-bar-container {
+    background: #f1f5f9;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+    width: 100%;
+}
+
+.alt-bar-fill {
+    background: #a16207;
+    height: 100%;
+}
+
+.alt-percentage {
+    font-weight: 700;
+    color: #7B3F00;
+    font-size: 14px;
+    text-align: right;
+    min-width: 55px;
+}
+
+/* Navigasi Aksi Bawah Halaman */
+.action-buttons-wrapper {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.action-buttons-wrapper a {
+    text-decoration: none;
+    padding: 10px 24px;
+}
+
+.action-buttons-wrapper .btn-secondary-custom {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+}
+
+.action-buttons-wrapper .btn-secondary-custom:hover {
+    background: #f8fafc;
+    color: #1e293b;
+}

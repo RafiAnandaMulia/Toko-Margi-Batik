@@ -1,0 +1,15 @@
+[
+  {
+    "resume_time": "2026-05-29T13:20:46.647648",
+    "from_epoch": 38,
+    "target_epochs": 50,
+    "checkpoint_used": "epoch_038_val_acc_0.9117.weights.h5",
+    "last_metrics": {
+      "epoch": 38,
+      "loss": 0.3329707980155945,
+      "accuracy": 0.9082217812538147,
+      "val_loss": 0.3864474892616272,
+      "val_accuracy": 0.9116848111152649
+    }
+  }
+]

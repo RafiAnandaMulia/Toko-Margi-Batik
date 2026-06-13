@@ -1,0 +1,35 @@
+{
+  "predicted_class": "solo_parang",
+  "confidence": 53.78,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "solo_parang",
+      "confidence": 53.78
+    },
+    {
+      "rank": 2,
+      "class_name": "bali_barong",
+      "confidence": 20.36
+    },
+    {
+      "rank": 3,
+      "class_name": "yogyakarta_kawung",
+      "confidence": 7.79
+    },
+    {
+      "rank": 4,
+      "class_name": "sekar",
+      "confidence": 7.66
+    },
+    {
+      "rank": 5,
+      "class_name": "cendrawasih",
+      "confidence": 2.58
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\a0b782decc0c4b1a8353370bdeaef4c2_klasifikasi_6a242beda6aad.jpg",
+  "timestamp": "2026-06-06T21:18:06.695445",
+  "num_classes": 17
+}

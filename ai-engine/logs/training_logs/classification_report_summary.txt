@@ -1,0 +1,112 @@
+============================================================
+         LAPORAN CONFUSION MATRIX - BATIK CLASSIFICATION
+============================================================
+  Model          : best_model.h5
+  Total Sampel   : 1551
+  Total Benar    : 1457
+  Accuracy       : 93.94%
+
+  Rumus yang digunakan:
+    Accuracy  = TP_semua / Total Sampel
+    Precision = TP / (TP + FP)
+    Recall    = TP / (TP + FN)
+    F1-Score  = 2 * (Precision * Recall) / (Precision + Recall)
+
+  Keterangan:
+    TP (True Positive)  = Prediksi benar untuk kelas ini
+    FP (False Positive) = Kelas lain salah diprediksi sebagai kelas ini
+    FN (False Negative) = Kelas ini salah diprediksi sebagai kelas lain
+    TN (True Negative)  = Bukan kelas ini dan diprediksi bukan kelas ini
+
+------------------------------------------------------------
+  Kelas                        TP    FP    FN     TN   Prec%    Rec%     F1%
+------------------------------------------------------------
+  bali_barong                  35     0    19   1497  100.00   64.81   78.65
+  cendrawasih                 113    28     3   1407   80.14   97.41   87.94
+  corak_insang                 58     0     0   1493  100.00  100.00  100.00
+  dayak                       102    13    14   1422   88.70   87.93   88.31
+  jakarta_ondel_ondel          43     4     1   1503   91.49   97.73   94.51
+  jawa_barat_megamendung      157     0     5   1389  100.00   96.91   98.43
+  madura_mataketeran           66     2     1   1482   97.06   98.51   97.78
+  ntb_lumbung                  69     1     4   1477   98.57   94.52   96.50
+  papua_tifa                   65     1     7   1478   98.48   90.28   94.20
+  sasirangan                   93     1     7   1450   98.94   93.00   95.88
+  sekar                        31     0     5   1515  100.00   86.11   92.54
+  sogan                        96     9     4   1442   91.43   96.00   93.66
+  solo_parang                 227    16    13   1295   93.42   94.58   94.00
+  sumatera_barat_rumah_minang 65     6     1   1479   91.55   98.48   94.89
+  sumatera_utara_boraspati     62     4     1   1484   93.94   98.41   96.12
+  yogyakarta_kawung           112     4     0   1435   96.55  100.00   98.25
+  yogyakarta_parang            63     5     9   1474   92.65   87.50   90.00
+
+======================================================================
+PERHITUNGAN DETAIL SETIAP KELAS
+======================================================================
+
+======================================================================
+KELAS : yogyakarta_parang
+======================================================================
+
+TP = 63
+FP = 5
+FN = 9
+TN = 1474
+
+Perhitungan Accuracy
+
+            TP + TN
+Accuracy = ----------
+         TP+TN+FP+FN
+
+         63 + 1474
+       = ------------
+         63+1474+5+9
+
+       = 1537
+         ----
+         1551
+
+       = 99.10%
+
+Perhitungan Precision
+
+             TP
+Precision = ------
+           TP + FP
+
+           63
+         = ------
+           63+5
+
+         = 92.65%
+
+Perhitungan Recall
+
+           TP
+Recall = ------
+          TP+FN
+
+          63
+       = ------
+          63+9
+
+       = 87.50%
+
+Perhitungan F1-Score
+
+            2 × (Precision × Recall)
+F1-Score = --------------------------
+             Precision + Recall
+
+         = 2 × (92.65 × 87.50)
+           -----------------------------------
+              (92.65 + 87.50)
+
+         = 90.00%
+
+------------------------------------------------------------
+
+  File output:
+    - C:\laragon\www\BATIK_CLASSIFICATION_SYSTEM\ai-engine\logs\training_logs\confusion_matrix.png
+    - C:\laragon\www\BATIK_CLASSIFICATION_SYSTEM\ai-engine\logs\training_logs\confusion_matrix.json
+============================================================

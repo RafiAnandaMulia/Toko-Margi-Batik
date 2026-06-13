@@ -1,0 +1,358 @@
+/* =====================================================
+   1. RESET & BASE STYLE (Murni Tanpa Framework)
+===================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #fcf9f6;
+    color: #333333;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =====================================================
+   2. MAIN LAYOUT (Sistem Tata Letak Sidebar & Content)
+===================================================== */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #fcf9f6;
+}
+
+/* Dorong halaman dashboard ke kanan selebar sidebar (200px) saat di monitor PC/Laptop */
+@media (min-width: 769px) {
+    .admin-main {
+        margin-left: 200px !important;
+        width: calc(100% - 200px);
+    }
+}
+
+.admin-content {
+    padding: 16px 20px;
+    flex: 1;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* =====================================================
+   3. PAGE HEADER (Lebih Tipis & Rapi)
+===================================================== */
+.page-header {
+    margin-bottom: 16px;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #5C2D00;
+    margin-bottom: 2px;
+    letter-spacing: -0.3px;
+}
+
+.page-icon {
+    font-size: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.page-subtitle {
+    color: #6c757d;
+    font-size: 0.8rem;
+}
+
+/* =====================================================
+   4. CUSTOM ALERT / FLASH NOTIFICATION
+===================================================== */
+.custom-alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    animation: slideDown 0.3s ease-out;
+}
+
+.custom-alert.success { background: #e8f5e9; color: #1b5e20; border-color: #c8e6c9; }
+.custom-alert.error { background: #ffebee; color: #c62828; border-color: #ffcdd2; }
+
+.alert-close {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: inherit;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    line-height: 1;
+}
+.alert-close:hover { opacity: 1; }
+
+/* =====================================================
+   5. STATISTIK CARDS (Compact Space-Saving)
+===================================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-column {
+    width: 100%;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid rgba(92, 45, 0, 0.05);
+    box-shadow: 0 2px 12px rgba(92, 45, 0, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(92, 45, 0, 0.06);
+}
+
+.no-decoration {
+    text-decoration: none;
+    color: inherit;
+}
+
+.stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.stat-icon.brown { background: #FFF3E0; color: #7B3F00; }
+.stat-icon.gold { background: #FFF8E1; color: #B78A02; }
+.stat-icon.green { background: #E8F5E9; color: #2E7D32; }
+.stat-icon.blue { background: #E3F2FD; color: #1565C0; }
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #5C2D00;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #757575;
+    font-weight: 500;
+}
+
+/* =====================================================
+   6. CARD & CONTENT HOUSING
+===================================================== */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.content-column {
+    width: 100%;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(92, 45, 0, 0.06);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+}
+
+.card-header {
+    padding: 10px 16px;
+    background: #7B3F00;
+    color: #ffffff;
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-header-flex > span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.card-body {
+    padding: 16px;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+/* =====================================================
+   7. TOMBOL LIHAT SEMUA (Mini & Clean)
+===================================================== */
+.btn-view-all {
+    text-decoration: none;
+    background: #ffffff;
+    color: #7B3F00;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-view-all:hover { background: #f5f5f5; }
+.btn-view-all:active { transform: scale(0.98); }
+
+/* =====================================================
+   8. TABEL PREDIKSI (Kerapatan Baris Maksimal)
+===================================================== */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.prediction-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.prediction-table th {
+    background: #fbf9f6;
+    color: #5C2D00;
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #f0eae4;
+}
+
+.prediction-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0eae4;
+    font-size: 0.8rem;
+    color: #4a4a4a;
+    vertical-align: middle;
+}
+
+.prediction-table tr:last-child td {
+    border-bottom: none;
+}
+
+.prediction-table tr:hover {
+    background: #faf7f2;
+}
+
+.empty-data {
+    text-align: center;
+    padding: 24px;
+    color: #9e9e9e;
+    font-size: 0.85rem;
+}
+
+/* =====================================================
+   9. COMPONENT BADGE & CONFIDENCE METER
+===================================================== */
+.prediction-badge {
+    display: inline-block;
+    background: #FFF3E0;
+    color: #7B3F00;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.confidence-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* =====================================================
+   10. ANIMASI KUSTOM
+===================================================== */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================
+   11. MEDIA QUERIES (SINKRONISASI LAYOR MOBILE)
+===================================================== */
+@media (max-width: 768px) {
+    /* Set padding space di HP agar judul tidak tertimpa tombol hamburger melayang */
+    .admin-main {
+        margin-left: 0 !important;
+        width: 100%;
+        padding-top: 45px; 
+    }
+
+    .admin-content {
+        padding: 12px 16px;
+    }
+
+    .page-title {
+        font-size: 1.2rem;
+    }
+
+    .stat-card {
+        padding: 10px 12px;
+    }
+
+    .stat-value {
+        font-size: 1.15rem;
+    }
+
+    .card-header-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .btn-view-all {
+        justify-content: center;
+        width: 100%;
+    }
+}

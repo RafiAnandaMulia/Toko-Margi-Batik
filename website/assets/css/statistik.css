@@ -1,0 +1,101 @@
+/* =====================================================
+   FILE: statistik.css
+   Khusus Modul Analitik & Grafik Chart.js
+===================================================== */
+
+/* 1. Tata Letak Fleksibel Halaman Statistik */
+.content-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Mengatur dua grafik berdampingan di PC, otomatis menumpuk di HP */
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+/* Pembungkus Grafik Chart.js agar Responsif */
+.card-body canvas {
+    max-width: 100%;
+}
+
+/* 2. Komponen Kerapatan Tabel Performa Model */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.prediction-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.prediction-table th {
+    background: #fbf9f6;
+    color: #5C2D00;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #f0eae4;
+}
+
+.prediction-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0eae4;
+    font-size: 0.8rem;
+    color: #4a4a4a;
+    vertical-align: middle;
+}
+
+.prediction-table tr:last-child td {
+    border-bottom: none;
+}
+
+.prediction-table tr:hover {
+    background: #faf7f2;
+}
+
+/* State jika data di database kosong */
+.empty-data {
+    text-align: center;
+    padding: 24px;
+    color: #9e9e9e;
+    font-size: 0.85rem;
+}
+
+/* 3. Komponen Visual (Badge Kelas & Progress Bar Akurasi) */
+.prediction-badge {
+    display: inline-block;
+    background: #FFF3E0;
+    color: #7B3F00;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.confidence-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 4. Media Queries Khusus Mobile (Breakpoints Layar HP) */
+@media (max-width: 768px) {
+    .charts-row {
+        grid-template-columns: 1fr; /* Grafik menjadi 1 kolom penuh di mobile */
+    }
+    
+    .prediction-table th, 
+    .prediction-table td {
+        padding: 10px 12px; /* Sedikit lebih rapat di HP agar hemat ruang */
+    }
+}

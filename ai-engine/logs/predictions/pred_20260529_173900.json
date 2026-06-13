@@ -1,0 +1,35 @@
+{
+  "predicted_class": "cendrawasih",
+  "confidence": 96.46,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "cendrawasih",
+      "confidence": 96.46
+    },
+    {
+      "rank": 2,
+      "class_name": "solo_parang",
+      "confidence": 2.53
+    },
+    {
+      "rank": 3,
+      "class_name": "sogan",
+      "confidence": 0.34
+    },
+    {
+      "rank": 4,
+      "class_name": "ntb_lumbung",
+      "confidence": 0.24
+    },
+    {
+      "rank": 5,
+      "class_name": "papua_tifa",
+      "confidence": 0.12
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\ed1db060d43d49e6b58aa3aa5c1adb49_klasifikasi_6a196c9512275.jpg",
+  "timestamp": "2026-05-29T17:39:00.582498",
+  "num_classes": 17
+}

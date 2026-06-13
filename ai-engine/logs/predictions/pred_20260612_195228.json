@@ -1,0 +1,35 @@
+{
+  "predicted_class": "dayak",
+  "confidence": 99.95,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "dayak",
+      "confidence": 99.95
+    },
+    {
+      "rank": 2,
+      "class_name": "sogan",
+      "confidence": 0.02
+    },
+    {
+      "rank": 3,
+      "class_name": "madura_mataketeran",
+      "confidence": 0.02
+    },
+    {
+      "rank": 4,
+      "class_name": "yogyakarta_kawung",
+      "confidence": 0.01
+    },
+    {
+      "rank": 5,
+      "class_name": "corak_insang",
+      "confidence": 0.0
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\b7eca82768894056b755c5b995278627_klasifikasi_6a2c010792270.webp",
+  "timestamp": "2026-06-12T19:52:28.450693",
+  "num_classes": 17
+}

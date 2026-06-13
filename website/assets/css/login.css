@@ -1,0 +1,222 @@
+/* ==========================================================================
+   ADMIN LOGIN - 100% KUSTOM TANPA FRAMEWORK BOOTSTRAP
+   ========================================================================== */
+
+/* Reset Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top right, #fdfbfc, #F8F4F0);
+    min-height: 100vh;
+    color: #334155;
+    line-height: 1.6;
+}
+
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Wadah Utama / Card */
+.login-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid #eae0d5;
+    box-shadow: 0 10px 30px rgba(92, 45, 0, 0.05);
+    text-align: center;
+}
+
+/* Judul & Identitas */
+.login-logo {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #5C2D00;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+}
+
+.login-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+/* Form Layout (Pengganti mt-4 Bootstrap) */
+#loginForm {
+    margin-top: 24px;
+}
+
+/* Grup Input & Label */
+.login-input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.login-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.login-svg-icon {
+    color: #7B3F00;
+    flex-shrink: 0;
+}
+
+/* Input Styles */
+.login-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #334155;
+    background-color: #fdfbfc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.login-input:focus {
+    border-color: #7B3F00;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(123, 63, 0, 0.15);
+}
+
+.login-input::placeholder {
+    color: #cbd5e1;
+}
+
+/* Container Password Kustom */
+.password-wrapper {
+    position: relative;
+}
+
+.input-pwd-pad {
+    padding-right: 44px;
+}
+
+.toggle-pwd-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #7B3F00;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Tombol Submit Utama */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #7B3F00;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(123, 63, 0, 0.15);
+}
+
+.login-btn:hover {
+    background: #5C2D00;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(92, 45, 0, 0.25);
+}
+
+.login-btn:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Tombol Kembali */
+.back-home-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 12px;
+    transition: all 0.2s ease;
+}
+
+.back-home-btn:hover {
+    background: #f8fafc;
+    color: #334155;
+    border-color: #94a3b8;
+}
+
+/* Kotak Box Error Kustom (Pengganti total .alert-danger Bootstrap) */
+.custom-error-box {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fee2e2;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-error-box svg {
+    flex-shrink: 0;
+}
+
+/* Kaki Halaman (Pengganti text-center & mt-4 Bootstrap) */
+.login-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* Media Query Responsive */
+@media screen and (max-width: 480px) {
+    .login-card {
+        padding: 30px 20px;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+    }
+}

@@ -1,0 +1,246 @@
+/**
+ * =============================================================
+ * website/assets/css/landing_page.css
+ * Gaya Tampilan Utama Landing Page Toko Margi Batik
+ * =============================================================
+ */
+
+/* --- RESET & BASE STYLES --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #fcf9f2;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('../img/hero-batik.jpg') center/cover no-repeat;
+    background-color: #8B5A2B; /* Warna cadangan jika gambar belum ada */
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    color: #f1c40f;
+    text-transform: uppercase;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    font-weight: 300;
+}
+
+/* --- MAIN CONTAINER & TITLE --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.2rem;
+    color: #5c3a21;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: #8B5A2B;
+    margin: 10px auto 0;
+}
+
+/* --- BATIK GRID & CARDS --- */
+.batik-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.batik-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eae1d4;
+    display: flex;
+    flex-direction: column;
+}
+
+.batik-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(139, 90, 43, 0.15);
+}
+
+.batik-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid #eae1d4;
+}
+
+.batik-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.batik-name {
+    font-size: 1.5rem;
+    color: #5c3a21;
+    margin-bottom: 5px;
+}
+
+.batik-region {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.85rem;
+    background: #f3e9dc;
+    color: #8B5A2B;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.batik-description {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+/* --- DETAIL SPESIFIKASI BATIK --- */
+.batik-details {
+    margin-top: auto;
+    font-size: 0.95rem;
+    border-top: 1px dashed #eae1d4;
+    padding-top: 15px;
+}
+
+.detail-item {
+    margin-bottom: 8px;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #8B5A2B;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.detail-text {
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #faf8f5;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 3px solid #8B5A2B;
+}
+
+.prediction-badge {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.slug-badge {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f1f1f1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #c0392b;
+    font-size: 0.8rem;
+}
+
+/* --- FOOTER & ALAMAT --- */
+footer {
+    background-color: #2c1d11;
+    color: #fcf9f2;
+    padding: 50px 20px 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.footer-info {
+    flex: 1;
+    min-width: 280px;
+}
+
+.footer-info h3 {
+    color: #f1c40f;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.footer-info p {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.footer-info strong {
+    color: #fff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #4a3321;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* --- RESPONSIVE LAYOUT --- */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .batik-grid {
+        grid-template-columns: 1fr;
+    }
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+}

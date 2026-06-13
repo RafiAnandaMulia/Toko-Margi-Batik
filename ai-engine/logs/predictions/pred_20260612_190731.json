@@ -1,0 +1,35 @@
+{
+  "predicted_class": "madura_mataketeran",
+  "confidence": 46.89,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "madura_mataketeran",
+      "confidence": 46.89
+    },
+    {
+      "rank": 2,
+      "class_name": "jakarta_ondel_ondel",
+      "confidence": 17.06
+    },
+    {
+      "rank": 3,
+      "class_name": "cendrawasih",
+      "confidence": 11.05
+    },
+    {
+      "rank": 4,
+      "class_name": "sasirangan",
+      "confidence": 8.36
+    },
+    {
+      "rank": 5,
+      "class_name": "ntb_lumbung",
+      "confidence": 7.79
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\efa7c3b0698240daa8d5e3c758f94441_klasifikasi_6a2bf67deb11b.webp",
+  "timestamp": "2026-06-12T19:07:31.987572",
+  "num_classes": 17
+}
