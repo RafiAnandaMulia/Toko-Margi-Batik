@@ -1,0 +1,95 @@
+{
+  "predicted_class": "sogan",
+  "confidence": 65.78,
+  "top_predictions": [
+    {
+      "rank": 1,
+      "class_name": "sogan",
+      "confidence": 65.78
+    },
+    {
+      "rank": 2,
+      "class_name": "yogyakarta_kawung",
+      "confidence": 14.51
+    },
+    {
+      "rank": 3,
+      "class_name": "ntb_lumbung",
+      "confidence": 12.25
+    },
+    {
+      "rank": 4,
+      "class_name": "dayak",
+      "confidence": 4.37
+    },
+    {
+      "rank": 5,
+      "class_name": "yogyakarta_parang",
+      "confidence": 1.34
+    },
+    {
+      "rank": 6,
+      "class_name": "cendrawasih",
+      "confidence": 1.09
+    },
+    {
+      "rank": 7,
+      "class_name": "solo_parang",
+      "confidence": 0.25
+    },
+    {
+      "rank": 8,
+      "class_name": "jakarta_ondel_ondel",
+      "confidence": 0.18
+    },
+    {
+      "rank": 9,
+      "class_name": "bali_barong",
+      "confidence": 0.12
+    },
+    {
+      "rank": 10,
+      "class_name": "madura_mataketeran",
+      "confidence": 0.07
+    },
+    {
+      "rank": 11,
+      "class_name": "corak_insang",
+      "confidence": 0.02
+    },
+    {
+      "rank": 12,
+      "class_name": "papua_tifa",
+      "confidence": 0.01
+    },
+    {
+      "rank": 13,
+      "class_name": "sasirangan",
+      "confidence": 0.01
+    },
+    {
+      "rank": 14,
+      "class_name": "sumatera_utara_boraspati",
+      "confidence": 0.0
+    },
+    {
+      "rank": 15,
+      "class_name": "sekar",
+      "confidence": 0.0
+    },
+    {
+      "rank": 16,
+      "class_name": "sumatera_barat_rumah_minang",
+      "confidence": 0.0
+    },
+    {
+      "rank": 17,
+      "class_name": "jawa_barat_megamendung",
+      "confidence": 0.0
+    }
+  ],
+  "model_used": "best_model.h5",
+  "image_path": "C:\\laragon\\www\\BATIK_CLASSIFICATION_SYSTEM\\flask-api\\uploads\\772f9f44adc5410fb07b229321cb6311_klasifikasi_6a2d71503559e.jpg",
+  "timestamp": "2026-06-13T22:04:05.689897",
+  "num_classes": 17
+}
