@@ -79,7 +79,7 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
 
             <div class="page-header">
                 <h1 class="page-title">
-                    <span class="page-icon">📈</span> Statistik Sistem
+                    <span class="page-icon"></span> Statistik Sistem
                 </h1>
                 <p class="page-subtitle">Analitik penggunaan dan performa klasifikasi batik MobileNetV2</p>
             </div>
@@ -90,25 +90,25 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                     [
                         'val'   => number_format($summary['total_predictions'] ?? 0),
                         'label' => 'Total Prediksi',
-                        'icon'  => '🔍',
+                        'icon'  => '',
                         'color' => 'brown'
                     ],
                     [
                         'val'   => ($summary['avg_confidence'] ?? 0) . '%',
                         'label' => 'Rata-rata Confidence',
-                        'icon'  => '🎯',
+                        'icon'  => '',
                         'color' => 'gold'
                     ],
                     [
                         'val'   => $summary['unique_classes'] ?? 0,
                         'label' => 'Kelas Terpakai',
-                        'icon'  => '🎨',
+                        'icon'  => '',
                         'color' => 'green'
                     ],
                     [
                         'val'   => $accuracy_rate . '%',
                         'label' => 'Akurasi Feedback',
-                        'icon'  => '✅',
+                        'icon'  => '',
                         'color' => 'blue'
                     ]
                 ];
@@ -133,7 +133,7 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                 <div class="charts-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
                     <div class="card">
                         <div class="card-header">
-                            <span>📊 Prediksi Harian (30 Hari Terakhir)</span>
+                            <span> Prediksi Harian (30 Hari Terakhir)</span>
                         </div>
                         <div class="card-body">
                             <div style="height:260px; position: relative;">
@@ -144,7 +144,7 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
 
                     <div class="card">
                         <div class="card-header">
-                            <span>🍩 Top 10 Kelas Batik</span>
+                            <span> Top 10 Kelas Batik</span>
                         </div>
                         <div class="card-body">
                             <div style="height:260px; position: relative;">
@@ -157,7 +157,7 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                 <div class="content-column">
                     <div class="card">
                         <div class="card-header">
-                            <span>📋 Detail Statistik Performa Motif Batik</span>
+                            <span> Detail Statistik Performa Motif Batik</span>
                         </div>
                         <div class="card-body no-padding">
                             <div class="table-wrapper">
@@ -181,13 +181,13 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                                     <tr>
                                         <td>
                                             <?php if ($i === 0): ?>
-                                                <span style="font-size:16px">🥇</span>
+                                                <span style="font-size:16px">1</span>
                                             <?php elseif ($i === 1): ?>
-                                                <span style="font-size:16px">🥈</span>
+                                                <span style="font-size:16px">2</span>
                                             <?php elseif ($i === 2): ?>
-                                                <span style="font-size:16px">🥉</span>
+                                                <span style="font-size:16px">3</span>
                                             <?php else: ?>
-                                                <span style="color:#aaa; font-weight: 600;">#<?= $i+1 ?></span>
+                                                <span style="color:#aaa; font-weight: 600;"><?= $i+1 ?></span>
                                             <?php endif; ?>
                                         </td>
                                         <td>

@@ -14,27 +14,21 @@ requireAdmin();
 // ─── Ambil statistik dari database ───────────────────────
 $stats = dbQueryOne("SELECT * FROM v_dashboard_stats") ?? [];
 
-$total_customers  = (int)($stats['total_customers']  ?? 0);
-$total_predictions= (int)($stats['total_predictions'] ?? 0);
-$total_categories = (int)($stats['total_categories']  ?? 0);
-$avg_confidence   = (float)($stats['avg_confidence']  ?? 0);
-$top_class        = $stats['most_predicted_class']     ?? '—';
+$total_predictions = (int)($stats['total_predictions'] ?? 0);
+$total_categories  = (int)($stats['total_categories'] ?? 0);
+$avg_confidence    = (float)($stats['avg_confidence'] ?? 0);
+$top_class         = $stats['most_predicted_class'] ?? '—';
 
 // ─── 5 prediksi terbaru ───────────────────────────────────
 $recent = dbQuery(
     "SELECT ch.id, ch.created_at, ch.predicted_class, ch.confidence,
-            COALESCE(u.full_name, 'Tamu') AS customer_name,
+            COALESCE(u.full_name, 'Pengunjung') AS customer_name,
             ch.image_filename
-     FROM   classification_history ch
+     FROM classification_history ch
      LEFT JOIN users u ON ch.user_id = u.id
-     ORDER BY ch.created_at DESC LIMIT 5"
+     ORDER BY ch.created_at DESC
+     LIMIT 5"
 );
-
-// ─── Status training ──────────────────────────────────────
-$training_logs = dbQuery(
-"SELECT * FROM training_logs ORDER BY id DESC LIMIT 5"
-);
-
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -97,22 +91,18 @@ $training_logs = dbQuery(
                         </div>
                     </div>
                 </div>
-                <div class="stat-column">
-                    <a href="train_model.php" class="stat-card no-decoration">
-                        <?php
-                        $ts = $training_status['status'] ?? 'idle';
-                        $ts_icon = $ts === 'running' ? '🔄' : ($ts === 'completed' ? '✅' : '⏸️');
-                        ?>
-                        <div class="stat-icon blue"><?= $ts_icon ?></div>
-                        <div>
-                            <div class="stat-value" style="font-size:14px; font-weight:700;">
-                                <?= $ts === 'running' ? ($training_status['percentage'] ?? 0).'%' : ucfirst($ts) ?>
-                            </div>
-                            <div class="stat-label">Status Training</div>
-                        </div>
-                    </a>
-                </div>
             </div>
+            <div class="stat-column">
+    <div class="stat-card">
+        <div class="stat-icon blue"><span>🏆</span></div>
+        <div>
+            <div class="stat-value">
+                <?= htmlspecialchars(str_replace('_', ' ', $top_class)) ?>
+            </div>
+            <div class="stat-label">Motif Terbanyak</div>
+        </div>
+    </div>
+</div>
 
             <div class="content-grid">
                 <div class="content-column">
@@ -127,7 +117,7 @@ $training_logs = dbQuery(
                                     <thead>
                                         <tr>
                                             <th>Waktu</th>
-                                            <th>Customer</th>
+                                            <th>Pengunjung</th>
                                             <th>Prediksi</th>
                                             <th>Confidence</th>
                                         </tr>

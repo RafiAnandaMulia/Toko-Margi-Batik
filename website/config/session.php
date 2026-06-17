@@ -44,7 +44,7 @@ function isLoggedIn(): bool {
  * @return bool True jika admin
  */
 function isAdmin(): bool {
-    return isLoggedIn() && ($_SESSION['user_role'] ?? '') === 'admin';
+    return isLoggedIn();
 }
 
 /**
@@ -78,14 +78,13 @@ function requireAdmin(): void {
  * @param array $user Data user dari database
  */
 function setUserSession(array $user): void {
-    // Regenerasi session ID saat login untuk mencegah session fixation
+
     session_regenerate_id(true);
 
     $_SESSION['user_id']       = (int)$user['id'];
-    $_SESSION['user_name']     = htmlspecialchars($user['full_name'],  ENT_QUOTES, 'UTF-8');
-    $_SESSION['user_email']    = htmlspecialchars($user['email'],      ENT_QUOTES, 'UTF-8');
-    $_SESSION['user_role']     = $user['role'];
-    $_SESSION['user_username'] = htmlspecialchars($user['username'],   ENT_QUOTES, 'UTF-8');
+    $_SESSION['user_name']     = htmlspecialchars($user['full_name'], ENT_QUOTES, 'UTF-8');
+    $_SESSION['user_email']    = htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8');
+    $_SESSION['user_username'] = htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8');
     $_SESSION['login_time']    = time();
     $_SESSION['last_regenerate'] = time();
 }

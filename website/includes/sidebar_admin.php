@@ -10,20 +10,20 @@ $sections = [
     'overview' => [
         'label' => 'Overview',
         'items' => [
-            ['url' => 'dashboard.php', 'icon' => '📊', 'label' => 'Dashboard'],
-            ['url' => 'statistik.php', 'icon' => '📈', 'label' => 'Statistik'],
+            ['url' => 'dashboard.php', 'icon' => '', 'label' => 'Dashboard'],
+            ['url' => 'statistik.php', 'icon' => '', 'label' => 'Statistik'],
         ]
     ],
     'catalog' => [
         'label' => 'Katalog',
         'items' => [
-            ['url' => 'kategori_batik.php', 'icon' => '🎨', 'label' => 'Kategori Batik'],
+            ['url' => 'kategori_batik.php', 'icon' => '', 'label' => 'Kategori Batik'],
         ]
     ],
     'customers' => [
         'label' => 'Customer',
         'items' => [
-            ['url' => 'riwayat_customer.php', 'icon' => '🕒', 'label' => 'Riwayat Klasifikasi'],
+            ['url' => 'riwayat_customer.php', 'icon' => '', 'label' => 'Riwayat Klasifikasi'],
         ]
     ],
 ];

@@ -34,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Ambil user dari database
             $user = dbQueryOne(
-                "SELECT id, username, email, password_hash, full_name, role, is_active
-                 FROM users
-                 WHERE email = ? AND role = 'admin'
-                 LIMIT 1",
-                [$email]
-            );
+    "SELECT id, username, email, password_hash, full_name, is_active
+     FROM users
+     WHERE email = ?
+     LIMIT 1",
+    [$email]
+);
             
             if (!$user || !$user['is_active']) {
                 sleep(1);

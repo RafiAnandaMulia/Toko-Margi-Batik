@@ -1,266 +1,159 @@
--- =============================================================
--- database/batik_ai.sql
--- Skema Database MySQL untuk Sistem Klasifikasi Batik
--- Toko Margi Batik — AI Classification System
--- =============================================================
--- Penggunaan:
---   mysql -u root -p < batik_ai.sql
--- =============================================================
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               8.4.3 - MySQL Community Server - GPL
+-- Server OS:                    Win64
+-- HeidiSQL Version:             12.8.0.6908
+-- --------------------------------------------------------
 
--- ─── Buat & Pilih Database ────────────────────────────────
-CREATE DATABASE IF NOT EXISTS batik_ai
-    CHARACTER SET  utf8mb4
-    COLLATE        utf8mb4_unicode_ci;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-USE batik_ai;
 
--- ─── Hapus tabel lama jika ada (urutan penting: FK dulu) ──
-SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS classification_history;
-DROP TABLE IF EXISTS training_logs;
-DROP TABLE IF EXISTS batik_images;
-DROP TABLE IF EXISTS batik_categories;
-DROP TABLE IF EXISTS users;
-SET FOREIGN_KEY_CHECKS = 1;
+-- Dumping database structure for batik_ai
+DROP DATABASE IF EXISTS `batik_ai`;
+CREATE DATABASE IF NOT EXISTS `batik_ai` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `batik_ai`;
 
--- =============================================================
--- TABEL: users
--- Menyimpan data pengguna (admin dan customer)
--- =============================================================
-CREATE TABLE users (
-    id            INT          UNSIGNED NOT NULL AUTO_INCREMENT,
-    username      VARCHAR(50)  NOT NULL,
-    email         VARCHAR(120) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,           -- Bcrypt hash, BUKAN plain text
-    full_name     VARCHAR(100) NOT NULL DEFAULT '',
-    role          ENUM('admin','customer')
-                               NOT NULL DEFAULT 'customer',
-    avatar        VARCHAR(255)          DEFAULT NULL,  -- Nama file avatar
-    is_active     TINYINT(1)  NOT NULL DEFAULT 1,      -- 1=aktif, 0=nonaktif
-    last_login    DATETIME             DEFAULT NULL,
-    created_at    DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at    DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP
-                                       ON UPDATE CURRENT_TIMESTAMP,
+-- Dumping structure for table batik_ai.batik_categories
+DROP TABLE IF EXISTS `batik_categories`;
+CREATE TABLE IF NOT EXISTS `batik_categories` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `slug` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `origin_region` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cultural_notes` text COLLATE utf8mb4_unicode_ci,
+  `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `image_path` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_categories_slug` (`slug`),
+  KEY `idx_categories_active` (`is_active`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Kategori/kelas batik yang dikenali model AI';
 
-    PRIMARY KEY (id),
-    UNIQUE KEY uq_users_email    (email),
-    UNIQUE KEY uq_users_username (username),
-    KEY        idx_users_role    (role),
-    KEY        idx_users_active  (is_active)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Data pengguna sistem (admin dan customer)';
+-- Dumping data for table batik_ai.batik_categories: ~19 rows (approximately)
+INSERT INTO `batik_categories` (`id`, `slug`, `name`, `description`, `image`, `origin_region`, `cultural_notes`, `thumbnail`, `is_active`, `created_at`, `updated_at`, `image_path`) VALUES
+	(1, 'bali_barong', 'Batik Bali Barong', 'Motif barong khas Bali dengan detail ornamen Bali YANNG kAYA', NULL, 'Bali', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:46:41', 'batik_6a2d5f41c80ee.jpg'),
+	(2, 'cendrawasih', 'Batik Cendrawasih', 'Motif burung cendrawasih khas Papua, melambangkan keindahan alam.', NULL, 'Papua', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:54:18', 'batik_6a2d610ae482f.jpg'),
+	(3, 'corak_insang', 'Batik Corak Insang', 'Motif insang ikan khas Kalimantan Barat dengan pola geometris.', NULL, 'Kalimantan Barat', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:55:42', 'batik_6a2d615e05f79.jpg'),
+	(4, 'dayak', 'Batik Dayak', 'Motif suku Dayak dengan ornamen khas budaya Kalimantan.', NULL, 'Kalimantan', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:55:31', 'batik_6a2d615374f44.jpg'),
+	(5, 'jakarta_ondel_ondel', 'Batik Jakarta Ondel-Ondel', 'Motif ondel-ondel ikon budaya Betawi Jakarta.', NULL, 'DKI Jakarta', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:55:57', 'batik_6a2d616da4960.jpg'),
+	(6, 'jawa_barat_megamendung', 'Batik Jawa Barat Megamendung', 'Motif awan mendung khas Cirebon dengan gradasi warna indah.', NULL, 'Jawa Barat', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:56:13', 'batik_6a2d617dbb006.jpg'),
+	(7, 'kawung', 'Batik Kawung', 'Motif klasik berbentuk lingkaran mirip buah aren (kawung).', NULL, 'Yogyakarta', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:56:31', 'batik_6a2d618f3b02a.jpg'),
+	(8, 'madura_mataketeran', 'Batik Madura Mataketeran', 'Motif khas Madura dengan warna cerah dan pola ekspresif.', NULL, 'Madura', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-13 20:56:51', 'batik_6a2d61a2ee73c.jpg'),
+	(10, 'ntb_lumbung', 'Batik NTB Lumbung', 'Motif lumbung padi khas NTB melambangkan kemakmuran.', NULL, 'Nusa Tenggara Barat', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(11, 'papua_tifa', 'Batik Papua Tifa', 'Motif alat musik tifa khas Papua dengan ornamen etnik.', NULL, 'Papua', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(12, 'parang', 'Batik Parang', 'Motif diagonal berulang menyerupai ombak laut, motif tertua Jawa.', NULL, 'Jawa', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(13, 'sasirangan', 'Batik Sasirangan', 'Motif khas Banjar dengan teknik ikat celup warna-warni.', NULL, 'Kalimantan Selatan', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(14, 'sekar', 'Batik Sekar', 'Motif bunga (sekar) dengan ragam hias flora nusantara.', NULL, 'Jawa', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(15, 'sogan', 'Batik Sogan', 'Batik klasik dengan warna cokelat sogan khas keraton.', NULL, 'Solo/Yogyakarta', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(16, 'solo_parang', 'Batik Solo Parang', 'Motif parang khas Solo dengan goresan elegan dan halus.', NULL, 'Solo', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(17, 'sumatera_barat_rumah_minang', 'Batik Sumatera Barat Rumah Minang', 'Motif rumah gadang dan ornamen khas Minangkabau.', NULL, 'Sumatera Barat', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(18, 'sumatera_utara_boraspati', 'Batik Sumatera Utara Boraspati', 'Motif cicak (boraspati) khas budaya Batak Sumatera Utara.', NULL, 'Sumatera Utara', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL),
+	(20, 'yogyakarta_kawung', 'Batik Yogyakarta Kawung', 'Motif kawung versi Yogyakarta dengan kehalusan khas keraton.', NULL, 'Yogyakarta', NULL, NULL, 1, '2026-06-03 10:20:44', '2026-06-03 10:20:44', NULL);
 
--- =============================================================
--- TABEL: batik_categories
--- Menyimpan kategori/kelas batik yang dikenali model
--- =============================================================
-CREATE TABLE batik_categories (
-    id             INT          UNSIGNED NOT NULL AUTO_INCREMENT,
-    slug           VARCHAR(100) NOT NULL,          -- Nama teknis dari labels.txt
-    name           VARCHAR(150) NOT NULL,          -- Nama tampilan yang ramah
-    description    TEXT                 DEFAULT NULL, -- Deskripsi batik
-    origin_region  VARCHAR(100)         DEFAULT NULL, -- Asal daerah
-    cultural_notes TEXT                 DEFAULT NULL, -- Catatan budaya
-    thumbnail      VARCHAR(255)         DEFAULT NULL, -- Gambar representatif
-    is_active      TINYINT(1)  NOT NULL DEFAULT 1,
-    created_at     DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at     DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP
-                                        ON UPDATE CURRENT_TIMESTAMP,
+-- Dumping structure for table batik_ai.classification_history
+DROP TABLE IF EXISTS `classification_history`;
+CREATE TABLE IF NOT EXISTS `classification_history` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned DEFAULT NULL,
+  `session_id` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_path` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `predicted_class` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `confidence` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `top_predictions` json DEFAULT NULL,
+  `model_version` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `processing_time` decimal(8,4) DEFAULT NULL,
+  `is_correct` tinyint(1) DEFAULT NULL,
+  `user_feedback` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_classify_user` (`user_id`),
+  KEY `idx_classify_session` (`session_id`),
+  KEY `idx_classify_class` (`predicted_class`),
+  KEY `idx_classify_date` (`created_at`),
+  KEY `idx_classify_confidence` (`confidence`),
+  KEY `idx_classify_user_date` (`user_id`,`created_at` DESC),
+  KEY `idx_classify_class_date` (`predicted_class`,`created_at` DESC),
+  CONSTRAINT `fk_classify_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Riwayat semua prediksi klasifikasi batik';
 
-    PRIMARY KEY (id),
-    UNIQUE KEY uq_categories_slug (slug),
-    KEY        idx_categories_active (is_active)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Kategori/kelas batik yang dikenali model AI';
+-- Dumping data for table batik_ai.classification_history: ~58 rows (approximately)
+INSERT INTO `classification_history` (`id`, `user_id`, `session_id`, `image_filename`, `image_path`, `predicted_class`, `confidence`, `top_predictions`, `model_version`, `processing_time`, `is_correct`, `user_feedback`, `ip_address`, `created_at`) VALUES
+	(1, 1, '8ou21t8f2s29b70i6l5dg0ug9j', 'klasifikasi_6a1fe174edf8c.jpg', 'klasifikasi/klasifikasi_6a1fe174edf8c.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-03 15:10:35'),
+	(2, 1, '8ou21t8f2s29b70i6l5dg0ug9j', 'klasifikasi_6a1fe1d196531.jpg', 'klasifikasi/klasifikasi_6a1fe1d196531.jpg', 'yogyakarta_kawung', 98.77, '[{"rank": 1, "class_name": "yogyakarta_kawung", "confidence": 98.77}, {"rank": 2, "class_name": "solo_parang", "confidence": 0.78}, {"rank": 3, "class_name": "sogan", "confidence": 0.31}, {"rank": 4, "class_name": "ntb_lumbung", "confidence": 0.04}, {"rank": 5, "class_name": "corak_insang", "confidence": 0.03}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-03 15:12:08'),
+	(3, NULL, 's49jc53k6u9rbhu09b97ag6tps', 'klasifikasi_6a21c09b5db44.jpg', 'klasifikasi/klasifikasi_6a21c09b5db44.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-05 01:15:17'),
+	(4, 1, 'oe7eq5rebk50745u3c4fu9hmir', 'klasifikasi_6a21c0f1750c1.jpg', 'klasifikasi/klasifikasi_6a21c0f1750c1.jpg', 'ntb_lumbung', 98.87, '[{"rank": 1, "class_name": "ntb_lumbung", "confidence": 98.87}, {"rank": 2, "class_name": "cendrawasih", "confidence": 0.51}, {"rank": 3, "class_name": "sasirangan", "confidence": 0.29}, {"rank": 4, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 5, "class_name": "jakarta_ondel_ondel", "confidence": 0.1}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-05 01:16:20'),
+	(5, NULL, 'elg04koe4kckr9b42d5gfu58qd', 'klasifikasi_6a242beda6aad.jpg', 'klasifikasi/klasifikasi_6a242beda6aad.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-06 21:18:06'),
+	(6, 1, '7t78rq7p9ree0slsvruh9eadtk', 'klasifikasi_6a242c66f105f.jpg', 'klasifikasi/klasifikasi_6a242c66f105f.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-06 21:19:25'),
+	(7, 1, '7t78rq7p9ree0slsvruh9eadtk', 'klasifikasi_6a242ca78b4fb.jpg', 'klasifikasi/klasifikasi_6a242ca78b4fb.jpg', 'corak_insang', 92.97, '[{"rank": 1, "class_name": "corak_insang", "confidence": 92.97}, {"rank": 2, "class_name": "solo_parang", "confidence": 3.85}, {"rank": 3, "class_name": "dayak", "confidence": 1.59}, {"rank": 4, "class_name": "yogyakarta_kawung", "confidence": 0.3}, {"rank": 5, "class_name": "sogan", "confidence": 0.25}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-06 21:20:26'),
+	(8, 1, '5r6iihuo959ij0111aa6kiba76', 'klasifikasi_6a2435413b370.jpg', 'klasifikasi/klasifikasi_6a2435413b370.jpg', 'corak_insang', 92.97, '[{"rank": 1, "class_name": "corak_insang", "confidence": 92.97}, {"rank": 2, "class_name": "solo_parang", "confidence": 3.85}, {"rank": 3, "class_name": "dayak", "confidence": 1.59}, {"rank": 4, "class_name": "yogyakarta_kawung", "confidence": 0.3}, {"rank": 5, "class_name": "sogan", "confidence": 0.25}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-06 21:57:11'),
+	(9, NULL, 'q6flc3esiiupjjm0o6u3h36g4d', 'klasifikasi_6a2444cc2fd61.jpg', 'klasifikasi/klasifikasi_6a2444cc2fd61.jpg', 'sekar', 49.01, '[{"rank": 1, "class_name": "sekar", "confidence": 49.01}, {"rank": 2, "class_name": "solo_parang", "confidence": 19.1}, {"rank": 3, "class_name": "jawa_barat_megamendung", "confidence": 17.91}, {"rank": 4, "class_name": "madura_mataketeran", "confidence": 3.31}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 2.54}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-06 23:03:28'),
+	(10, NULL, 'q6flc3esiiupjjm0o6u3h36g4d', 'klasifikasi_6a2445254493c.jpg', 'klasifikasi/klasifikasi_6a2445254493c.jpg', 'sekar', 49.01, '[{"rank": 1, "class_name": "sekar", "confidence": 49.01}, {"rank": 2, "class_name": "solo_parang", "confidence": 19.1}, {"rank": 3, "class_name": "jawa_barat_megamendung", "confidence": 17.91}, {"rank": 4, "class_name": "madura_mataketeran", "confidence": 3.31}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 2.54}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-06 23:04:56'),
+	(11, NULL, 'q6flc3esiiupjjm0o6u3h36g4d', 'klasifikasi_6a2446b8b5e0a.jpg', 'klasifikasi/klasifikasi_6a2446b8b5e0a.jpg', 'sekar', 49.01, '[{"rank": 1, "class_name": "sekar", "confidence": 49.01}, {"rank": 2, "class_name": "solo_parang", "confidence": 19.1}, {"rank": 3, "class_name": "jawa_barat_megamendung", "confidence": 17.91}, {"rank": 4, "class_name": "madura_mataketeran", "confidence": 3.31}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 2.54}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-06 23:11:42'),
+	(12, NULL, 'ug4ir961so5igakk0kotpf5rpf', 'klasifikasi_6a2470bd73b75.jpg', 'klasifikasi/klasifikasi_6a2470bd73b75.jpg', 'ntb_lumbung', 98.87, '[{"rank": 1, "class_name": "ntb_lumbung", "confidence": 98.87}, {"rank": 2, "class_name": "cendrawasih", "confidence": 0.51}, {"rank": 3, "class_name": "sasirangan", "confidence": 0.29}, {"rank": 4, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 5, "class_name": "jakarta_ondel_ondel", "confidence": 0.1}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-07 02:11:34'),
+	(13, NULL, 'fm8mordgnmkfqnvjirqj66uobo', 'klasifikasi_6a28fda3aa57a.jpg', 'klasifikasi/klasifikasi_6a28fda3aa57a.jpg', 'ntb_lumbung', 98.87, '[{"rank": 1, "class_name": "ntb_lumbung", "confidence": 98.87}, {"rank": 2, "class_name": "cendrawasih", "confidence": 0.51}, {"rank": 3, "class_name": "sasirangan", "confidence": 0.29}, {"rank": 4, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 5, "class_name": "jakarta_ondel_ondel", "confidence": 0.1}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-10 13:01:21'),
+	(14, NULL, 'fm8mordgnmkfqnvjirqj66uobo', 'klasifikasi_6a28fdd81d5b8.jpg', 'klasifikasi/klasifikasi_6a28fdd81d5b8.jpg', 'corak_insang', 92.97, '[{"rank": 1, "class_name": "corak_insang", "confidence": 92.97}, {"rank": 2, "class_name": "solo_parang", "confidence": 3.85}, {"rank": 3, "class_name": "dayak", "confidence": 1.59}, {"rank": 4, "class_name": "yogyakarta_kawung", "confidence": 0.3}, {"rank": 5, "class_name": "sogan", "confidence": 0.25}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-10 13:02:02'),
+	(15, NULL, 'fm8mordgnmkfqnvjirqj66uobo', 'klasifikasi_6a28fe125b758.jpg', 'klasifikasi/klasifikasi_6a28fe125b758.jpg', 'solo_parang', 100.00, '[{"rank": 1, "class_name": "solo_parang", "confidence": 100}, {"rank": 2, "class_name": "yogyakarta_parang", "confidence": 0}, {"rank": 3, "class_name": "sumatera_utara_boraspati", "confidence": 0}, {"rank": 4, "class_name": "bali_barong", "confidence": 0}, {"rank": 5, "class_name": "sekar", "confidence": 0}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-10 13:03:01'),
+	(16, 1, 'kei8vrdj9d9atm6ug78coue3fu', 'klasifikasi_6a2abe645cd18.jpg', 'klasifikasi/klasifikasi_6a2abe645cd18.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-11 20:56:16'),
+	(17, 1, 'kei8vrdj9d9atm6ug78coue3fu', 'klasifikasi_6a2abec09ba3e.jpg', 'klasifikasi/klasifikasi_6a2abec09ba3e.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-11 20:57:23'),
+	(18, 1, 'ql0rg0ohi6rtldrmfo5l33bp0q', 'klasifikasi_6a2ad37ac3d31.jpg', 'klasifikasi/klasifikasi_6a2ad37ac3d31.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-11 22:25:53'),
+	(19, 1, 'ql0rg0ohi6rtldrmfo5l33bp0q', 'klasifikasi_6a2ad3a65a9fd.jpg', 'klasifikasi/klasifikasi_6a2ad3a65a9fd.jpg', 'bali_barong', 62.81, '[{"rank": 1, "class_name": "bali_barong", "confidence": 62.81}, {"rank": 2, "class_name": "cendrawasih", "confidence": 34.68}, {"rank": 3, "class_name": "sumatera_utara_boraspati", "confidence": 0.77}, {"rank": 4, "class_name": "dayak", "confidence": 0.52}, {"rank": 5, "class_name": "sekar", "confidence": 0.35}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-11 22:26:33'),
+	(20, 1, 'bqok5ajre9jmhbk0vj97c5oiek', 'klasifikasi_6a2adc65a18f8.jpg', 'klasifikasi/klasifikasi_6a2adc65a18f8.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-11 23:03:56'),
+	(21, NULL, 'lb86qk2pv5e53t7930duteiv6d', 'klasifikasi_6a2bedd942647.jpg', 'klasifikasi/klasifikasi_6a2bedd942647.jpg', 'corak_insang', 92.97, '[{"rank": 1, "class_name": "corak_insang", "confidence": 92.97}, {"rank": 2, "class_name": "solo_parang", "confidence": 3.85}, {"rank": 3, "class_name": "dayak", "confidence": 1.59}, {"rank": 4, "class_name": "yogyakarta_kawung", "confidence": 0.3}, {"rank": 5, "class_name": "sogan", "confidence": 0.25}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:31:28'),
+	(22, NULL, 'lb86qk2pv5e53t7930duteiv6d', 'klasifikasi_6a2bee3aef681.jpg', 'klasifikasi/klasifikasi_6a2bee3aef681.jpg', 'solo_parang', 98.14, '[{"rank": 1, "class_name": "solo_parang", "confidence": 98.14}, {"rank": 2, "class_name": "yogyakarta_parang", "confidence": 0.57}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 0.33}, {"rank": 4, "class_name": "yogyakarta_kawung", "confidence": 0.33}, {"rank": 5, "class_name": "sekar", "confidence": 0.19}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:32:18'),
+	(23, NULL, 'lb86qk2pv5e53t7930duteiv6d', 'klasifikasi_6a2beed5304dc.jpg', 'klasifikasi/klasifikasi_6a2beed5304dc.jpg', 'ntb_lumbung', 98.87, '[{"rank": 1, "class_name": "ntb_lumbung", "confidence": 98.87}, {"rank": 2, "class_name": "cendrawasih", "confidence": 0.51}, {"rank": 3, "class_name": "sasirangan", "confidence": 0.29}, {"rank": 4, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 5, "class_name": "jakarta_ondel_ondel", "confidence": 0.1}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:34:52'),
+	(24, NULL, 'lb86qk2pv5e53t7930duteiv6d', 'klasifikasi_6a2beeffb0208.jpg', 'klasifikasi/klasifikasi_6a2beeffb0208.jpg', 'sekar', 49.01, '[{"rank": 1, "class_name": "sekar", "confidence": 49.01}, {"rank": 2, "class_name": "solo_parang", "confidence": 19.1}, {"rank": 3, "class_name": "jawa_barat_megamendung", "confidence": 17.91}, {"rank": 4, "class_name": "madura_mataketeran", "confidence": 3.31}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 2.54}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:35:36'),
+	(25, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf15443954.png', 'klasifikasi/klasifikasi_6a2bf15443954.png', 'solo_parang', 66.98, '[{"rank": 1, "class_name": "solo_parang", "confidence": 66.98}, {"rank": 2, "class_name": "sasirangan", "confidence": 19.18}, {"rank": 3, "class_name": "dayak", "confidence": 7.92}, {"rank": 4, "class_name": "cendrawasih", "confidence": 3.23}, {"rank": 5, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.86}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:45:33'),
+	(26, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf18e05e6c.webp', 'klasifikasi/klasifikasi_6a2bf18e05e6c.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:46:31'),
+	(27, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf1b4ab9e6.jpg', 'klasifikasi/klasifikasi_6a2bf1b4ab9e6.jpg', 'solo_parang', 96.11, '[{"rank": 1, "class_name": "solo_parang", "confidence": 96.11}, {"rank": 2, "class_name": "yogyakarta_parang", "confidence": 1.1}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 0.87}, {"rank": 4, "class_name": "ntb_lumbung", "confidence": 0.5}, {"rank": 5, "class_name": "cendrawasih", "confidence": 0.46}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:47:10'),
+	(28, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf3b973b6a.png', 'klasifikasi/klasifikasi_6a2bf3b973b6a.png', 'solo_parang', 66.98, '[{"rank": 1, "class_name": "solo_parang", "confidence": 66.98}, {"rank": 2, "class_name": "sasirangan", "confidence": 19.18}, {"rank": 3, "class_name": "dayak", "confidence": 7.92}, {"rank": 4, "class_name": "cendrawasih", "confidence": 3.23}, {"rank": 5, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.86}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:55:45'),
+	(29, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf43a1a805.webp', 'klasifikasi/klasifikasi_6a2bf43a1a805.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 18:57:52'),
+	(30, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf591e5f67.webp', 'klasifikasi/klasifikasi_6a2bf591e5f67.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:03:40'),
+	(31, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf66d40b4c.webp', 'klasifikasi/klasifikasi_6a2bf66d40b4c.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:07:17'),
+	(32, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf675a2eff.webp', 'klasifikasi/klasifikasi_6a2bf675a2eff.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:07:25'),
+	(33, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf67deb11b.webp', 'klasifikasi/klasifikasi_6a2bf67deb11b.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:07:32'),
+	(34, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf6840e11e.webp', 'klasifikasi/klasifikasi_6a2bf6840e11e.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:07:40'),
+	(35, 1, 'ngjknmjdm2kgtviscdf3d5cis1', 'klasifikasi_6a2bf68c7aa5a.webp', 'klasifikasi/klasifikasi_6a2bf68c7aa5a.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:07:43'),
+	(36, 1, '8s5ka62aoguiqf3buj7hjr7c9b', 'klasifikasi_6a2bf780a82be.jpg', 'klasifikasi/klasifikasi_6a2bf780a82be.jpg', 'solo_parang', 60.49, '[{"rank": 1, "class_name": "solo_parang", "confidence": 60.49}, {"rank": 2, "class_name": "sasirangan", "confidence": 15.6}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 8.79}, {"rank": 4, "class_name": "jakarta_ondel_ondel", "confidence": 5.41}, {"rank": 5, "class_name": "sumatera_barat_rumah_minang", "confidence": 2.36}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:11:56'),
+	(37, 1, '8s5ka62aoguiqf3buj7hjr7c9b', 'klasifikasi_6a2bfa8ed12d8.jpg', 'klasifikasi/klasifikasi_6a2bfa8ed12d8.jpg', 'solo_parang', 60.49, '[{"rank": 1, "class_name": "solo_parang", "confidence": 60.49}, {"rank": 2, "class_name": "sasirangan", "confidence": 15.6}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 8.79}, {"rank": 4, "class_name": "jakarta_ondel_ondel", "confidence": 5.41}, {"rank": 5, "class_name": "sumatera_barat_rumah_minang", "confidence": 2.36}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:24:59'),
+	(38, 1, '8s5ka62aoguiqf3buj7hjr7c9b', 'klasifikasi_6a2bfac5966eb.webp', 'klasifikasi/klasifikasi_6a2bfac5966eb.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:25:48'),
+	(39, 1, '8s5ka62aoguiqf3buj7hjr7c9b', 'klasifikasi_6a2bfae3d4abc.webp', 'klasifikasi/klasifikasi_6a2bfae3d4abc.webp', 'madura_mataketeran', 46.89, '[{"rank": 1, "class_name": "madura_mataketeran", "confidence": 46.89}, {"rank": 2, "class_name": "jakarta_ondel_ondel", "confidence": 17.06}, {"rank": 3, "class_name": "cendrawasih", "confidence": 11.05}, {"rank": 4, "class_name": "sasirangan", "confidence": 8.36}, {"rank": 5, "class_name": "ntb_lumbung", "confidence": 7.79}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:26:15'),
+	(40, NULL, '8to85vaatom3opvv7nb1jckrrg', 'klasifikasi_6a2bff4455af7.jpg', 'klasifikasi/klasifikasi_6a2bff4455af7.jpg', 'solo_parang', 96.11, '[{"rank": 1, "class_name": "solo_parang", "confidence": 96.11}, {"rank": 2, "class_name": "yogyakarta_parang", "confidence": 1.1}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 0.87}, {"rank": 4, "class_name": "ntb_lumbung", "confidence": 0.5}, {"rank": 5, "class_name": "cendrawasih", "confidence": 0.46}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:45:02'),
+	(41, 1, 'p07m0mr10824m2cl54f1r9n9ej', 'klasifikasi_6a2c010792270.webp', 'klasifikasi/klasifikasi_6a2c010792270.webp', 'dayak', 99.95, '[{"rank": 1, "class_name": "dayak", "confidence": 99.95}, {"rank": 2, "class_name": "sogan", "confidence": 0.02}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 0.02}, {"rank": 4, "class_name": "yogyakarta_kawung", "confidence": 0.01}, {"rank": 5, "class_name": "corak_insang", "confidence": 0}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-12 19:52:28'),
+	(42, NULL, 'aa8fme9pkjvrto8ugi50r6glml', 'klasifikasi_6a2cf862a9d53.jpg', 'klasifikasi/klasifikasi_6a2cf862a9d53.jpg', 'solo_parang', 53.78, '[{"rank": 1, "class_name": "solo_parang", "confidence": 53.78}, {"rank": 2, "class_name": "bali_barong", "confidence": 20.36}, {"rank": 3, "class_name": "yogyakarta_kawung", "confidence": 7.79}, {"rank": 4, "class_name": "sekar", "confidence": 7.66}, {"rank": 5, "class_name": "cendrawasih", "confidence": 2.58}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 13:28:36'),
+	(43, NULL, 'aa8fme9pkjvrto8ugi50r6glml', 'klasifikasi_6a2cf9d3b576e.jpg', 'klasifikasi/klasifikasi_6a2cf9d3b576e.jpg', 'ntb_lumbung', 98.87, '[{"rank": 1, "class_name": "ntb_lumbung", "confidence": 98.87}, {"rank": 2, "class_name": "cendrawasih", "confidence": 0.51}, {"rank": 3, "class_name": "sasirangan", "confidence": 0.29}, {"rank": 4, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 5, "class_name": "jakarta_ondel_ondel", "confidence": 0.1}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 13:34:07'),
+	(44, NULL, 'aa8fme9pkjvrto8ugi50r6glml', 'klasifikasi_6a2cfa1e20928.jpeg', 'klasifikasi/klasifikasi_6a2cfa1e20928.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 13:35:22'),
+	(45, 1, 'vn6aj2lvquv3fm2p06doqss11t', 'klasifikasi_6a2d091e40b52.jpeg', 'klasifikasi/klasifikasi_6a2d091e40b52.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 14:40:01'),
+	(46, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d6382c6b82.jpeg', 'klasifikasi/klasifikasi_6a2d6382c6b82.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:05:20'),
+	(47, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d641f7b8af.jpeg', 'klasifikasi/klasifikasi_6a2d641f7b8af.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:07:30'),
+	(48, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d65304965e.jpeg', 'klasifikasi/klasifikasi_6a2d65304965e.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:12:03'),
+	(49, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d668bcc495.jpeg', 'klasifikasi/klasifikasi_6a2d668bcc495.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:17:50'),
+	(50, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d66dd952ae.jpeg', 'klasifikasi/klasifikasi_6a2d66dd952ae.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:19:22'),
+	(51, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d673dd9ff3.jpeg', 'klasifikasi/klasifikasi_6a2d673dd9ff3.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:20:48'),
+	(52, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d674b7feed.jpeg', 'klasifikasi/klasifikasi_6a2d674b7feed.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:21:02'),
+	(53, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d68b05343b.jpeg', 'klasifikasi/klasifikasi_6a2d68b05343b.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:26:58'),
+	(54, 1, 'ciu3tmn801rinalem8jrrm2a2r', 'klasifikasi_6a2d68c2ac1ac.jpeg', 'klasifikasi/klasifikasi_6a2d68c2ac1ac.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:27:17'),
+	(55, 1, '4298gf3i5qlpakoeml2fp4sj87', 'klasifikasi_6a2d6a9bb8742.jpeg', 'klasifikasi/klasifikasi_6a2d6a9bb8742.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:35:10'),
+	(56, 1, '4298gf3i5qlpakoeml2fp4sj87', 'klasifikasi_6a2d6ad63f1b1.jpeg', 'klasifikasi/klasifikasi_6a2d6ad63f1b1.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:36:19'),
+	(57, 1, '4298gf3i5qlpakoeml2fp4sj87', 'klasifikasi_6a2d6c7fb5d88.jpeg', 'klasifikasi/klasifikasi_6a2d6c7fb5d88.jpeg', 'solo_parang', 33.79, '[{"rank": 1, "class_name": "solo_parang", "confidence": 33.79}, {"rank": 2, "class_name": "cendrawasih", "confidence": 23.58}, {"rank": 3, "class_name": "madura_mataketeran", "confidence": 19.36}, {"rank": 4, "class_name": "sekar", "confidence": 14.36}, {"rank": 5, "class_name": "yogyakarta_kawung", "confidence": 5.43}, {"rank": 6, "class_name": "bali_barong", "confidence": 1.85}, {"rank": 7, "class_name": "yogyakarta_parang", "confidence": 0.55}, {"rank": 8, "class_name": "sogan", "confidence": 0.47}, {"rank": 9, "class_name": "jakarta_ondel_ondel", "confidence": 0.26}, {"rank": 10, "class_name": "sumatera_barat_rumah_minang", "confidence": 0.13}, {"rank": 11, "class_name": "papua_tifa", "confidence": 0.13}, {"rank": 12, "class_name": "jawa_barat_megamendung", "confidence": 0.05}, {"rank": 13, "class_name": "sumatera_utara_boraspati", "confidence": 0.02}, {"rank": 14, "class_name": "corak_insang", "confidence": 0.01}, {"rank": 15, "class_name": "ntb_lumbung", "confidence": 0.01}, {"rank": 16, "class_name": "dayak", "confidence": 0.01}, {"rank": 17, "class_name": "sasirangan", "confidence": 0.01}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 21:43:22'),
+	(58, 1, '4298gf3i5qlpakoeml2fp4sj87', 'klasifikasi_6a2d71503559e.jpg', 'klasifikasi/klasifikasi_6a2d71503559e.jpg', 'sogan', 65.78, '[{"rank": 1, "class_name": "sogan", "confidence": 65.78}, {"rank": 2, "class_name": "yogyakarta_kawung", "confidence": 14.51}, {"rank": 3, "class_name": "ntb_lumbung", "confidence": 12.25}, {"rank": 4, "class_name": "dayak", "confidence": 4.37}, {"rank": 5, "class_name": "yogyakarta_parang", "confidence": 1.34}, {"rank": 6, "class_name": "cendrawasih", "confidence": 1.09}, {"rank": 7, "class_name": "solo_parang", "confidence": 0.25}, {"rank": 8, "class_name": "jakarta_ondel_ondel", "confidence": 0.18}, {"rank": 9, "class_name": "bali_barong", "confidence": 0.12}, {"rank": 10, "class_name": "madura_mataketeran", "confidence": 0.07}, {"rank": 11, "class_name": "corak_insang", "confidence": 0.02}, {"rank": 12, "class_name": "papua_tifa", "confidence": 0.01}, {"rank": 13, "class_name": "sasirangan", "confidence": 0.01}, {"rank": 14, "class_name": "sumatera_utara_boraspati", "confidence": 0}, {"rank": 15, "class_name": "sekar", "confidence": 0}, {"rank": 16, "class_name": "sumatera_barat_rumah_minang", "confidence": 0}, {"rank": 17, "class_name": "jawa_barat_megamendung", "confidence": 0}]', 'best_model.h5', NULL, NULL, NULL, '::1', '2026-06-13 22:04:07');
 
--- =============================================================
--- TABEL: batik_images
--- Galeri gambar untuk setiap kategori batik
--- =============================================================
-CREATE TABLE batik_images (
-    id           INT          UNSIGNED NOT NULL AUTO_INCREMENT,
-    category_id  INT          UNSIGNED NOT NULL,
-    filename     VARCHAR(255) NOT NULL,            -- Nama file gambar
-    filepath     VARCHAR(500) NOT NULL,            -- Relative path dari uploads/
-    caption      VARCHAR(255)         DEFAULT NULL,
-    is_primary   TINYINT(1)  NOT NULL DEFAULT 0,  -- 1 = gambar utama kategori
-    upload_by    INT          UNSIGNED DEFAULT NULL,
-    created_at   DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (id),
-    KEY idx_images_category (category_id),
-    KEY idx_images_primary  (is_primary),
-    CONSTRAINT fk_images_category FOREIGN KEY (category_id)
-        REFERENCES batik_categories (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_images_uploader  FOREIGN KEY (upload_by)
-        REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Galeri gambar contoh batik per kategori';
-
--- =============================================================
--- TABEL: classification_history
--- Riwayat setiap prediksi/klasifikasi yang dilakukan
--- =============================================================
-CREATE TABLE classification_history (
-    id               INT          UNSIGNED NOT NULL AUTO_INCREMENT,
-    user_id          INT          UNSIGNED DEFAULT NULL,  -- NULL jika guest
-    session_id       VARCHAR(128)          DEFAULT NULL,  -- Session PHP untuk guest
-    image_filename   VARCHAR(255) NOT NULL,               -- Nama file yang diunggah
-    image_path       VARCHAR(500) NOT NULL,               -- Path file yang disimpan
-    predicted_class  VARCHAR(150) NOT NULL,               -- Kelas yang diprediksi
-    confidence       DECIMAL(6,2) NOT NULL DEFAULT 0.00, -- Persentase keyakinan (0-100)
-    top_predictions  JSON                  DEFAULT NULL,  -- Top-5 prediksi dalam JSON
-    model_version    VARCHAR(50)           DEFAULT NULL,  -- Versi/nama file model
-    processing_time  DECIMAL(8,4)         DEFAULT NULL,  -- Waktu proses (detik)
-    is_correct       TINYINT(1)           DEFAULT NULL,  -- Feedback user: 1=benar, 0=salah, NULL=belum
-    user_feedback    VARCHAR(255)          DEFAULT NULL,  -- Komentar feedback user
-    ip_address       VARCHAR(45)           DEFAULT NULL,  -- IPv4/IPv6 client
-    created_at       DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (id),
-    KEY idx_classify_user      (user_id),
-    KEY idx_classify_session   (session_id),
-    KEY idx_classify_class     (predicted_class),
-    KEY idx_classify_date      (created_at),
-    KEY idx_classify_confidence(confidence),
-    CONSTRAINT fk_classify_user FOREIGN KEY (user_id)
-        REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Riwayat semua prediksi klasifikasi batik';
-
--- =============================================================
--- TABEL: training_logs
--- Mencatat setiap sesi pelatihan model AI
--- =============================================================
-CREATE TABLE training_logs (
-    id                INT          UNSIGNED NOT NULL AUTO_INCREMENT,
-    session_id        VARCHAR(64)  NOT NULL,            -- UUID unik per sesi training
-    started_by        INT          UNSIGNED DEFAULT NULL, -- Admin yang memulai
-    status            ENUM('pending','running','completed','error','stopped')
-                                   NOT NULL DEFAULT 'pending',
-    total_epochs      SMALLINT     UNSIGNED NOT NULL DEFAULT 0,
-    current_epoch     SMALLINT     UNSIGNED NOT NULL DEFAULT 0,
-    best_val_accuracy DECIMAL(7,5)          DEFAULT NULL, -- Akurasi validasi terbaik
-    final_accuracy    DECIMAL(7,5)          DEFAULT NULL, -- Akurasi akhir (test set)
-    final_loss        DECIMAL(10,7)         DEFAULT NULL,
-    model_path        VARCHAR(500)          DEFAULT NULL, -- Path model yang dihasilkan
-    hyperparams       JSON                  DEFAULT NULL, -- Hyperparameter sebagai JSON
-    error_message     TEXT                  DEFAULT NULL, -- Pesan error jika gagal
-    started_at        DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    finished_at       DATETIME             DEFAULT NULL,
-    duration_seconds  INT         UNSIGNED DEFAULT NULL, -- Durasi training (detik)
-    updated_at        DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP
-                                          ON UPDATE CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (id),
-    UNIQUE KEY uq_training_session (session_id),
-    KEY        idx_training_status (status),
-    KEY        idx_training_date   (started_at),
-    CONSTRAINT fk_training_admin FOREIGN KEY (started_by)
-        REFERENCES users (id) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Log setiap sesi pelatihan model AI batik';
-
--- =============================================================
--- TABEL: training_epoch_logs
--- Detail akurasi dan loss per epoch (dari CSV, di-sync ke DB)
--- =============================================================
-CREATE TABLE training_epoch_logs (
-    id              INT      UNSIGNED NOT NULL AUTO_INCREMENT,
-    training_id     INT      UNSIGNED NOT NULL,   -- FK ke training_logs
-    epoch           SMALLINT UNSIGNED NOT NULL,
-    loss            DECIMAL(10,7)     DEFAULT NULL,
-    accuracy        DECIMAL(7,5)      DEFAULT NULL,
-    val_loss        DECIMAL(10,7)     DEFAULT NULL,
-    val_accuracy    DECIMAL(7,5)      DEFAULT NULL,
-    learning_rate   DECIMAL(12,10)    DEFAULT NULL,
-    logged_at       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY (id),
-    UNIQUE KEY uq_epoch_per_session (training_id, epoch),
-    KEY        idx_epoch_training   (training_id),
-    CONSTRAINT fk_epoch_training FOREIGN KEY (training_id)
-        REFERENCES training_logs (id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Detail metrik per epoch untuk setiap sesi training';
-
--- =============================================================
--- DATA AWAL (SEED DATA)
--- =============================================================
-
--- ─── Admin default ────────────────────────────────────────
--- Password: admin123 (bcrypt hash — GANTI di production!)
-INSERT INTO users (username, email, password_hash, full_name, role) VALUES
-(
-    'admin',
-    'admin@margibatik.id',
-    '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uElKlFpKm',
-    'Administrator Margi Batik',
-    'admin'
-);
-
--- ─── Kategori batik (21 kelas sesuai dataset) ─────────────
-INSERT INTO batik_categories (slug, name, origin_region, description) VALUES
-('bali_barong',                 'Batik Bali Barong',               'Bali',           'Motif barong khas Bali dengan detail ornamen Bali yang kaya.'),
-('cendrawasih',                 'Batik Cendrawasih',               'Papua',          'Motif burung cendrawasih khas Papua, melambangkan keindahan alam.'),
-('corak_insang',                'Batik Corak Insang',              'Kalimantan Barat','Motif insang ikan khas Kalimantan Barat dengan pola geometris.'),
-('dayak',                       'Batik Dayak',                     'Kalimantan',     'Motif suku Dayak dengan ornamen khas budaya Kalimantan.'),
-('jakarta_ondel_ondel',         'Batik Jakarta Ondel-Ondel',       'DKI Jakarta',    'Motif ondel-ondel ikon budaya Betawi Jakarta.'),
-('jawa_barat_megamendung',      'Batik Jawa Barat Megamendung',    'Jawa Barat',     'Motif awan mendung khas Cirebon dengan gradasi warna indah.'),
-('kawung',                      'Batik Kawung',                    'Yogyakarta',     'Motif klasik berbentuk lingkaran mirip buah aren (kawung).'),
-('madura_mataketeran',          'Batik Madura Mataketeran',        'Madura',         'Motif khas Madura dengan warna cerah dan pola ekspresif.'),
-('megamendung',                 'Batik Megamendung',               'Cirebon',        'Motif awan megamendung ikonik dari Cirebon dengan warna biru.'),
-('ntb_lumbung',                 'Batik NTB Lumbung',               'Nusa Tenggara Barat','Motif lumbung padi khas NTB melambangkan kemakmuran.'),
-('papua_tifa',                  'Batik Papua Tifa',                'Papua',          'Motif alat musik tifa khas Papua dengan ornamen etnik.'),
-('parang',                      'Batik Parang',                    'Jawa',           'Motif diagonal berulang menyerupai ombak laut, motif tertua Jawa.'),
-('sasirangan',                  'Batik Sasirangan',                'Kalimantan Selatan','Motif khas Banjar dengan teknik ikat celup warna-warni.'),
-('sekar',                       'Batik Sekar',                     'Jawa',           'Motif bunga (sekar) dengan ragam hias flora nusantara.'),
-('sogan',                       'Batik Sogan',                     'Solo/Yogyakarta','Batik klasik dengan warna cokelat sogan khas keraton.'),
-('solo_parang',                 'Batik Solo Parang',               'Solo',           'Motif parang khas Solo dengan goresan elegan dan halus.'),
-('sumatera_barat_rumah_minang', 'Batik Sumatera Barat Rumah Minang','Sumatera Barat','Motif rumah gadang dan ornamen khas Minangkabau.'),
-('sumatera_utara_boraspati',    'Batik Sumatera Utara Boraspati',  'Sumatera Utara', 'Motif cicak (boraspati) khas budaya Batak Sumatera Utara.'),
-('truntum',                     'Batik Truntum',                   'Solo',           'Motif bintang bertaburan, melambangkan cinta yang tumbuh kembali.'),
-('yogyakarta_kawung',           'Batik Yogyakarta Kawung',         'Yogyakarta',     'Motif kawung versi Yogyakarta dengan kehalusan khas keraton.'),
-('yogyakarta_parang',           'Batik Yogyakarta Parang',         'Yogyakarta',     'Motif parang khas Yogyakarta, bersejarah dari tradisi keraton.');
-
--- =============================================================
--- VIEW: Statistik cepat untuk dashboard admin
--- =============================================================
-CREATE OR REPLACE VIEW v_dashboard_stats AS
-SELECT
-    (SELECT COUNT(*) FROM users WHERE role = 'customer') AS total_customers,
-    (SELECT COUNT(*) FROM classification_history)        AS total_predictions,
-    (SELECT COUNT(*) FROM batik_categories WHERE is_active = 1) AS total_categories,
-    (SELECT COUNT(*) FROM training_logs WHERE status = 'completed') AS total_trainings,
-    (SELECT ROUND(AVG(confidence), 2) FROM classification_history) AS avg_confidence,
-    (SELECT predicted_class FROM classification_history
-     GROUP BY predicted_class ORDER BY COUNT(*) DESC LIMIT 1)      AS most_predicted_class;
-
--- =============================================================
--- VIEW: Riwayat prediksi dengan nama lengkap
--- =============================================================
-CREATE OR REPLACE VIEW v_classification_history AS
-SELECT
-    ch.id,
-    ch.created_at,
-    COALESCE(u.full_name, 'Tamu')   AS customer_name,
-    COALESCE(u.email, '-')          AS customer_email,
-    ch.predicted_class,
-    bc.name                         AS category_display_name,
-    ch.confidence,
-    ch.image_filename,
-    ch.is_correct
-FROM classification_history ch
-LEFT JOIN users             u  ON ch.user_id     = u.id
-LEFT JOIN batik_categories  bc ON ch.predicted_class = bc.slug
-ORDER BY ch.created_at DESC;
-
--- =============================================================
--- STORED PROCEDURE: Simpan hasil prediksi dari PHP
--- =============================================================
-DELIMITER $$
-
-CREATE PROCEDURE sp_save_prediction(
+-- Dumping structure for procedure batik_ai.sp_save_prediction
+DROP PROCEDURE IF EXISTS `sp_save_prediction`;
+DELIMITER //
+CREATE PROCEDURE `sp_save_prediction`(
     IN  p_user_id        INT UNSIGNED,
     IN  p_session_id     VARCHAR(128),
     IN  p_image_filename VARCHAR(255),
@@ -293,29 +186,67 @@ BEGIN
     );
 
     SET p_new_id = LAST_INSERT_ID();
-END$$
-
+END//
 DELIMITER ;
 
--- =============================================================
--- INDEX TAMBAHAN untuk performa query
--- =============================================================
--- Index komposit untuk query riwayat per user + tanggal
-ALTER TABLE classification_history
-    ADD INDEX idx_classify_user_date (user_id, created_at DESC);
+-- Dumping structure for table batik_ai.users
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(120) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `full_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `last_login` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_users_email` (`email`),
+  UNIQUE KEY `uq_users_username` (`username`),
+  KEY `idx_users_active` (`is_active`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Data pengguna sistem (admin dan customer)';
 
--- Index untuk statistik per kelas
-ALTER TABLE classification_history
-    ADD INDEX idx_classify_class_date (predicted_class, created_at DESC);
+-- Dumping data for table batik_ai.users: ~1 rows (approximately)
+INSERT INTO `users` (`id`, `username`, `email`, `password_hash`, `full_name`, `avatar`, `is_active`, `last_login`, `created_at`, `updated_at`) VALUES
+	(1, 'admin', 'admin@margibatik.id', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uElKlFpKm', 'Administrator Margi Batik', NULL, 1, '2026-06-16 21:01:19', '2026-06-03 10:20:44', '2026-06-16 21:01:19');
 
--- =============================================================
--- VERIFIKASI
--- =============================================================
-SELECT
-    TABLE_NAME                                                AS `Tabel`,
-    TABLE_ROWS                                                AS `Estimasi Baris`,
-    ROUND(DATA_LENGTH / 1024, 2)                              AS `Data (KB)`,
-    TABLE_COMMENT                                             AS `Keterangan`
-FROM information_schema.TABLES
-WHERE TABLE_SCHEMA = 'batik_ai'
-ORDER BY TABLE_NAME;
+-- Dumping structure for view batik_ai.v_classification_history
+DROP VIEW IF EXISTS `v_classification_history`;
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `v_classification_history` (
+	`id` INT UNSIGNED NOT NULL,
+	`created_at` DATETIME NOT NULL,
+	`customer_name` VARCHAR(1) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`customer_email` VARCHAR(1) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`predicted_class` VARCHAR(1) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`category_display_name` VARCHAR(1) NULL COLLATE 'utf8mb4_unicode_ci',
+	`confidence` DECIMAL(6,2) NOT NULL,
+	`image_filename` VARCHAR(1) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`is_correct` TINYINT(1) NULL
+) ENGINE=MyISAM;
+
+-- Dumping structure for view batik_ai.v_dashboard_stats
+DROP VIEW IF EXISTS `v_dashboard_stats`;
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `v_dashboard_stats` (
+	`total_predictions` BIGINT NULL,
+	`total_categories` BIGINT NULL,
+	`avg_confidence` DECIMAL(7,2) NULL,
+	`most_predicted_class` VARCHAR(1) NULL COLLATE 'utf8mb4_unicode_ci'
+) ENGINE=MyISAM;
+
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `v_classification_history`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_classification_history` AS select `ch`.`id` AS `id`,`ch`.`created_at` AS `created_at`,coalesce(`u`.`full_name`,'Tamu') AS `customer_name`,coalesce(`u`.`email`,'-') AS `customer_email`,`ch`.`predicted_class` AS `predicted_class`,`bc`.`name` AS `category_display_name`,`ch`.`confidence` AS `confidence`,`ch`.`image_filename` AS `image_filename`,`ch`.`is_correct` AS `is_correct` from ((`classification_history` `ch` left join `users` `u` on((`ch`.`user_id` = `u`.`id`))) left join `batik_categories` `bc` on((`ch`.`predicted_class` = `bc`.`slug`))) order by `ch`.`created_at` desc;
+
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `v_dashboard_stats`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_dashboard_stats` AS select (select count(0) from `classification_history`) AS `total_predictions`,(select count(0) from `batik_categories` where (`batik_categories`.`is_active` = 1)) AS `total_categories`,(select round(avg(`classification_history`.`confidence`),2) from `classification_history`) AS `avg_confidence`,(select `classification_history`.`predicted_class` from `classification_history` group by `classification_history`.`predicted_class` order by count(0) desc limit 1) AS `most_predicted_class`;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

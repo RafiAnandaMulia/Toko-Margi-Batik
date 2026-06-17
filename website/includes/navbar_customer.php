@@ -33,18 +33,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li>
                 <a class="<?= $current_page === 'margi.php' ? 'active' : '' ?>" href="/BATIK_CLASSIFICATION_SYSTEM/website/customer/margi.php">Margi Batik</a>
             </li>
-            <?php if (!isLoggedIn()): ?>
-                <li class="mobile-action-li">
-                    <a href="/BATIK_CLASSIFICATION_SYSTEM/website/admin/login.php" class="btn-batik">Masuk</a>
-                </li>
-            <?php endif; ?>
         </ul>
-
-        <div class="navbar-actions">
-            <?php if (!isLoggedIn()): ?>
-                <a href="/BATIK_CLASSIFICATION_SYSTEM/website/admin/login.php" class="btn-batik">Masuk</a>
-            <?php endif; ?>
-        </div>
+<div class="navbar-actions">
+    <a href="/BATIK_CLASSIFICATION_SYSTEM/website/admin/login.php"
+       class="btn-batik">
+        Admin
+    </a>
+</div>
 
     </div>
 </nav>
