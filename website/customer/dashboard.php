@@ -96,10 +96,6 @@ require_once __DIR__ . '/../config/session.php';
                 <p class="hero-subtitle" style="color: #475569; font-size: 15px; line-height: 1.6; margin-bottom: 30px;">
                     Sistem ini dibangun khusus untuk melestarikan warisan budaya Indonesia dengan mengintegrasikan kecerdasan buatan. Melalui arsitektur Deep Learning <strong>MobileNetV2</strong>, sistem mampu mengidentifikasi karakteristik visual dan pola geometri kain batik secara instan dan akurat.
                 </p>
-                <div class="hero-buttons" style="display: flex; gap: 15px;">
-                    <a href="#klasifikasi" class="btn-primary-custom" style="text-decoration: none; padding: 12px 28px; font-weight: 700; background: #7B3F00; color:#fff; border-radius:8px;">Mulai Klasifikasi</a>
-                    <a href="#tentang-mitra" class="btn-secondary-custom" style="text-decoration: none; padding: 12px 28px; font-weight: 700; border: 1px solid #cbd5e1; background: #fff; color: #475569; border-radius:8px;">Profil Mitra</a>
-                </div>
             </div>
             <div class="hero-image" style="flex: 0 0 auto; text-align: center; margin: 0 auto;">
                 <img src="/BATIK_CLASSIFICATION_SYSTEM/website/assets/images/logo.png" alt="Logo Margi Batik" class="hero-logo" style="width: 280px; max-width: 100%; height: auto;">
@@ -141,33 +137,57 @@ require_once __DIR__ . '/../config/session.php';
         </div>
     </section>
 
-    <section id="klasifikasi" class="section-block" style="padding: 80px 0; background:#F8F4F0;">
-        <div class="page-container" style="max-width: 750px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
-            <h2 class="section-title" style="text-align:center; color:#5C2D00; font-size:26px; font-weight:800; margin-bottom:10px;">🔍 Pengujian Validasi Citra</h2>
+    <section id="alamat-toko" class="section-block" style="padding: 80px 0; background:#F8F4F0;">
+        <div class="page-container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px; box-sizing: border-box;">
+            <h2 class="section-title" style="text-align:center; color:#5C2D00; font-size:26px; font-weight:800; margin-bottom:10px;"> Lokasi Toko Margi Batik</h2>
             <p style="text-align:center; color:#7f8c8d; font-size:14px; margin-bottom:40px; line-height:1.5;">
-                Unggah potongan gambar kain batik Anda di bawah ini untuk menguji performa klasifikasi kecerdasan buatan secara langsung.
+                Silakan kunjungi Toko Margi Batik kami untuk melihat langsung koleksi kain batik tulis dan cap otentik.
             </p>
             
-            <div class="upload-card" style="background:#ffffff; border-radius:16px; padding:40px; box-shadow:0 10px 30px rgba(92,45,0,0.04); border:1px solid #eae0d5;">
-                <form action="klasifikasi.php" method="POST" enctype="multipart/form-data" style="text-align:center;">
+            <div class="maps-container-grid" style="display: flex; flex-wrap: wrap; gap: 30px; background: #ffffff; border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(92,45,0,0.04); border: 1px solid #eae0d5;">
+                
+                <div class="address-details" style="flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <span style="font-size: 36px;"></span>
+                        <div>
+                            <h3 style="color:#5C2D00; margin:0; font-size:20px; font-weight:700;">Toko Margi Batik</h3>
+                            <p style="color:#64748b; font-size:13px; margin: 2px 0 0 0;">Menjual Koleksi Batik</p>
+                        </div>
+                    </div>
                     
-                    <div class="dropzone-area" id="dropzone">
-                        <span style="font-size:48px; display:block; margin-bottom:15px;">🖼️</span>
-                        <p id="dropzone-text" style="font-size:15px; font-weight:600; color:#475569; margin: 5px 0;">
-                            Tarik & letakkan gambar di sini atau <span style="color:#7B3F00; text-decoration:underline;">pilih berkas</span>
-                        </p>
-                        <input type="file" name="batik_image" id="batik_image" accept="image/*" required style="display:none;">
-                        <p style="font-size:12px; color:#64748b; margin-top:10px;">Format berkas didukung: JPG, JPEG, PNG, WEBP (Maks. 10MB)</p>
-                        
-                        <div class="preview-container" id="preview-container">
-                            <img src="" alt="Pratinjau Batik" class="preview-image" id="image-preview">
+                    <p style="font-size:15px; color:#475569; line-height:1.6; margin: 0 0 25px 0;">
+                        <strong>Alamat:</strong><br>
+                         Bl. M Square, Jl. Melawai 5 No.001, RT.4/RW.1, Melawai, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12160<br>
+                        <span style="color: #7f8c8d; font-size: 13px;"></span>
+                    </p>
+
+                    <div style="border-top: 1px solid #eae0d5; border-bottom: 1px solid #eae0d5; padding: 20px 0; margin-bottom: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="font-size:14px; color:#475569;">
+                            <strong>🕒 Jam Operasional:</strong><br>
+                            <span style="color:#64748b; font-size:13px;">Setiap Hari<br>08.00 - 17.00 WIB</span>
+                        </div>
+                        <div style="font-size:14px; color:#475569;">
+                            <strong>📞 Kontak / WA:</strong><br>
+                            <span style="color:#64748b; font-size:13px;">+62 0822-9981-9199<br></span>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-primary-custom" style="width:100%; padding:14px; font-size:16px; border:none; cursor:pointer; font-weight:700; border-radius:12px; background:#7B3F00; color:#fff;">
-                        Kirim ke Sistem Klasifikasi
-                    </button>
-                </form>
+                    <a href="https://maps.app.goo.gl/a6bwWBp5qRcS9smg9" target="_blank" class="btn-primary-custom" style="text-align: center; text-decoration:none; padding:14px; font-size:15px; font-weight:700; border-radius:10px; background:#7B3F00; color:#fff; box-shadow: 0 4px 12px rgba(123,63,0,0.15); transition: background 0.3s;">
+                        Petunjuk Arah (Buka di Aplikasi Maps)
+                    </a>
+                </div>
+                
+                <div class="address-map" style="flex: 1.2; min-width: 320px; height: 380px; border-radius: 12px; overflow: hidden; border: 1px solid #cbd5e1;">
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.123456789!2d110.812345!3d-7.56789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMzQnMDQuNCJTIDExMMKwNDgnNDQuNCJF!5e0!3m2!1sid!2sid!4v1234567890" 
+        width="100%" 
+        height="100%" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
             </div>
         </div>
     </section>

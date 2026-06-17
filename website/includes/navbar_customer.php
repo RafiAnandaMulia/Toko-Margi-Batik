@@ -31,7 +31,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <a class="<?= $current_page === 'klasifikasi.php' ? 'active' : '' ?>" href="/BATIK_CLASSIFICATION_SYSTEM/website/customer/klasifikasi.php">Klasifikasi</a>
             </li>
             <li>
-                <a class="<?= $current_page === 'margi.php' ? 'active' : '' ?>" href="/BATIK_CLASSIFICATION_SYSTEM/website/customer/margi.php">Margi Batik</a>
+                <a class="<?= $current_page === 'margi.php' ? 'active' : '' ?>" href="/BATIK_CLASSIFICATION_SYSTEM/website/customer/margi.php">Gambar Batik</a>
             </li>
         </ul>
 <div class="navbar-actions">

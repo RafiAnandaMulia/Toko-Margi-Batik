@@ -91,26 +91,20 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                         'val'   => number_format($summary['total_predictions'] ?? 0),
                         'label' => 'Total Prediksi',
                         'icon'  => '',
-                        'color' => 'brown'
+                        'color' => ''
                     ],
                     [
                         'val'   => ($summary['avg_confidence'] ?? 0) . '%',
                         'label' => 'Rata-rata Confidence',
                         'icon'  => '',
-                        'color' => 'gold'
+                        'color' => ''
                     ],
                     [
                         'val'   => $summary['unique_classes'] ?? 0,
                         'label' => 'Kelas Terpakai',
                         'icon'  => '',
-                        'color' => 'green'
+                        'color' => ''
                     ],
-                    [
-                        'val'   => $accuracy_rate . '%',
-                        'label' => 'Akurasi Feedback',
-                        'icon'  => '',
-                        'color' => 'blue'
-                    ]
                 ];
                 foreach ($summary_cards as $c):
                 ?>
@@ -168,7 +162,6 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                                             <th>Kelas Batik</th>
                                             <th>Total Prediksi</th>
                                             <th>Rata-rata Confidence</th>
-                                            <th>Feedback Benar</th>
                                             <th>Proporsi Data</th>
                                         </tr>
                                     </thead>

@@ -1,25 +1,50 @@
 /* ==========================================================================
    website/assets/css/riwayat_customer.css
-   Desain Kustom Murni Premium Tanpa Framework Untuk Panel Riwayat Admin
+   Layout Panel Admin & Tabel Riwayat Klasifikasi Margi Batik
    ========================================================================== */
 
-/* ── LAYOUT DASAR ──────────────────────────────────────────────────────── */
-body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #fcfaf7; /* Nuansa krem bersih */
+/* --- Reset & Global Admin Base --- */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
+    background-color: #F8F4F0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     color: #334155;
+    min-height: 100vh;
 }
 
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
+    position: relative;
+    width: 100%;
 }
 
-/* ── PAGE HEADER & BREADCRUMB ───────────────────────────────────────────── */
+/* --- Main Content Area --- */
+.admin-main {
+    flex: 1;
+    min-width: 0; /* Mencegah flex item meluber keluar container */
+    display: flex;
+    flex-direction: column;
+    background-color: #F8F4F0;
+}
+
+.admin-content {
+    padding: 30px;
+    flex: 1;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* --- Header Section --- */
 .page-header-container {
-    padding: 8px 4px 20px 4px;
+    margin-bottom: 25px;
 }
 
 .custom-breadcrumb {
@@ -27,17 +52,13 @@ body {
     align-items: center;
     gap: 8px;
     font-size: 13px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .custom-breadcrumb a {
     color: #7B3F00;
     text-decoration: none;
-    transition: color 0.2s;
-}
-
-.custom-breadcrumb a:hover {
-    text-decoration: underline;
+    font-weight: 600;
 }
 
 .custom-breadcrumb .divider {
@@ -49,123 +70,116 @@ body {
 }
 
 .page-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #2B1600;
-    margin: 0 0 4px 0;
+    font-size: 26px;
+    color: #5C2D00;
+    font-weight: 800;
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.page-title i {
-    color: #7B3F00;
+    margin-bottom: 5px;
 }
 
 .page-subtitle {
-    font-size: 13px;
+    font-size: 14px;
     color: #64748b;
-    margin: 0;
 }
 
-/* ── KARTU CONTAINER (CARD) ────────────────────────────────────────────── */
+/* --- Admin Cards Base --- */
 .admin-card {
     background: #ffffff;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid #eae0d5;
-    box-shadow: 0 2px 12px rgba(123, 63, 0, 0.03);
-    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(92, 45, 0, 0.02);
+    margin-bottom: 25px;
     overflow: hidden;
 }
 
-.card-body-custom {
-    padding: 16px 20px;
+/* --- Filter Form Grid --- */
+.filter-card {
+    padding: 20px;
 }
 
-/* ── GRID FILTER & SEARCH ──────────────────────────────────────────────── */
 .filter-grid {
-    display: grid;
-    grid-template-columns: 2fr 1.5fr 1fr;
-    gap: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
     align-items: flex-end;
+}
+
+.filter-col-search {
+    flex: 2;
+    min-width: 250px;
+}
+
+.filter-col-class {
+    flex: 1;
+    min-width: 180px;
+}
+
+.filter-col-buttons {
+    display: flex;
+    gap: 10px;
 }
 
 .custom-form-label {
     display: block;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     color: #5C2D00;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
-/* Input Search Box */
 .custom-input-group {
+    position: relative;
     display: flex;
     align-items: center;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    background: #ffffff;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.custom-input-group:focus-within {
-    border-color: #7B3F00;
-    box-shadow: 0 0 0 3px rgba(123, 63, 0, 0.1);
 }
 
 .input-group-icon {
-    padding: 0 10px;
+    position: absolute;
+    left: 12px;
     color: #94a3b8;
-    display: flex;
-    align-items: center;
 }
 
 .custom-form-control {
     width: 100%;
-    border: none;
-    outline: none;
-    padding: 8px 10px 8px 0;
-    font-size: 13px;
-    color: #334155;
-    background: transparent;
-}
-
-/* Dropdown Select */
-.custom-form-select {
-    width: 100%;
+    padding: 10px 12px 10px 38px;
+    font-size: 14px;
     border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 7px 10px;
-    font-size: 13px;
+    border-radius: 8px;
     color: #334155;
     outline: none;
-    background-color: #ffffff;
     transition: border-color 0.2s;
 }
 
-.custom-form-select:focus {
+.custom-form-control:focus, .custom-form-select:focus {
     border-color: #7B3F00;
+    box-shadow: 0 0 0 3px rgba(123, 63, 0, 0.1);
 }
 
-/* Tombol Aksi */
-.filter-col-buttons {
-    display: flex;
-    gap: 8px;
+.custom-form-select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    color: #334155;
+    background-color: #fff;
+    outline: none;
 }
 
+/* --- Buttons --- */
 .btn-custom {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
+    gap: 8px;
     text-decoration: none;
-    transition: all 0.2s ease;
-    height: 33px;
+    height: 41px;
     box-sizing: border-box;
 }
 
@@ -173,7 +187,6 @@ body {
     background-color: #7B3F00;
     color: #ffffff;
     border: none;
-    flex: 1;
 }
 
 .btn-primary-custom:hover {
@@ -184,80 +197,77 @@ body {
     background-color: #ffffff;
     color: #64748b;
     border: 1px solid #cbd5e1;
-    width: 38px;
-    padding: 0;
 }
 
 .btn-outline-custom:hover {
-    background-color: #f1f5f9;
+    background-color: #f8fafc;
     color: #334155;
-    border-color: #94a3b8;
 }
 
-/* ── TABEL DESAIN KUSTOM ────────────────────────────────────────────────── */
+/* --- Responsive Table --- */
 .table-responsive-wrapper {
     width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .custom-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .custom-table th {
-    background-color: #f8f1ea;
+    background-color: #faf6f0;
     color: #5C2D00;
     font-weight: 700;
-    padding: 12px 16px;
+    padding: 14px 16px;
     border-bottom: 2px solid #eae0d5;
     white-space: nowrap;
 }
 
 .custom-table td {
     padding: 14px 16px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #eae0d5;
     vertical-align: middle;
+    background-color: #ffffff;
 }
 
-.custom-table tbody tr:hover {
-    background-color: #fdfcfb;
+.custom-table tr:hover td {
+    background-color: #fdfbf7;
 }
 
-/* Gaya Khusus Tiap Kolom */
+/* --- Table Cells Component Style --- */
 .col-number {
     color: #94a3b8;
-    font-weight: 500;
-}
-
-.col-datetime {
-    white-space: nowrap;
-    line-height: 1.4;
+    font-weight: 600;
 }
 
 .col-datetime .date-text {
     display: block;
-    font-weight: 500;
+    font-weight: 600;
+    color: #334155;
 }
 
 .col-datetime .time-text {
+    display: block;
+    font-size: 12px;
     color: #94a3b8;
-    font-size: 11px;
+    margin-top: 2px;
 }
 
 .cust-name {
-    font-weight: 600;
-    color: #1e293b;
+    font-weight: 700;
+    color: #334155;
 }
 
 .cust-email {
-    font-size: 11px;
+    font-size: 12px;
     color: #64748b;
 }
 
-/* Desain Preview Thumbnail Gambar */
+/* Image Thumbnail Area */
 .image-preview-box {
     display: flex;
     align-items: center;
@@ -265,16 +275,13 @@ body {
 }
 
 .img-thumbnail-container {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 6px;
-    background: #f1f5f9;
-    border: 1px solid #e2e8f0;
     overflow: hidden;
+    border: 1px solid #eae0d5;
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: #f1f5f9;
 }
 
 .img-thumbnail-container img {
@@ -284,169 +291,154 @@ body {
 }
 
 .filename-text {
-    font-size: 11px;
-    color: #64748b;
-    max-width: 120px;
+    max-width: 150px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 12px;
+    color: #64748b;
 }
 
-/* Progres Bar Akurasi (Confidence) */
-.confidence-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.confidence-bar-bg {
-    width: 60px;
-    height: 6px;
-    background: #f1f5f9;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.confidence-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #7B3F00, #D4A017);
-    border-radius: 10px;
-}
-
-.confidence-number {
+/* Badge Predictions */
+.badge-custom {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
     font-weight: 700;
-    color: #5C2D00;
+}
+
+.badge-predicted {
+    background-color: #f5ebe0;
+    color: #7B3F00;
+    border: 1px solid #eae0d5;
 }
 
 .category-subtext {
     font-size: 11px;
     color: #94a3b8;
-    margin-top: 2px;
+    margin-top: 4px;
+}
+
+/* Confidence Bar */
+.confidence-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.confidence-bar-bg {
+    flex: 1;
+    height: 8px;
+    background-color: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 80px;
+}
+
+.confidence-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7B3F00, #A0522D);
+    border-radius: 4px;
+}
+
+.confidence-number {
+    font-weight: 700;
+    font-size: 13px;
+    color: #334155;
+    min-width: 45px;
+    text-align: right;
 }
 
 /* Empty State */
 .table-empty-state {
-    text-align: center;
-    padding: 48px 0 !important;
+    text-align: center !important;
+    padding: 50px 0 !important;
     color: #94a3b8;
 }
 
 .table-empty-state i {
-    font-size: 36px;
-    color: #cbd5e1;
+    font-size: 40px;
+    margin-bottom: 10px;
+    display: inline-block;
 }
 
-.table-empty-state p {
-    margin: 8px 0 0 0;
-    font-size: 14px;
-}
-
-/* ── BADGE STATUS KUSTOM ────────────────────────────────────────────────── */
-.badge-custom {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-}
-
-.badge-predicted {
-    background-color: #f5ece3;
-    color: #7B3F00;
-    border: 1px solid #e1d2c3;
-}
-
-.badge-status-null {
-    background-color: #fef3c7;
-    color: #d97706;
-}
-
-.badge-status-true {
-    background-color: #dcfce7;
-    color: #15803d;
-}
-
-.badge-status-false {
-    background-color: #fee2e2;
-    color: #b91c1c;
-}
-
-/* ── PAGINATION AREA ────────────────────────────────────────────────────── */
+/* --- Pagination Styles --- */
 .pagination-container {
-    padding: 16px 20px;
-    border-top: 1px solid #f1f5f9;
+    padding: 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-top: 1px solid #eae0d5;
     background: #fafafa;
 }
 
 .custom-pagination {
     display: flex;
     list-style: none;
-    padding: 0;
-    margin: 0;
-    gap: 4px;
+    gap: 5px;
 }
 
 .page-item-custom a, .page-item-custom span {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 28px;
-    height: 28px;
-    padding: 0 6px;
-    font-size: 12px;
-    font-weight: 600;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
     color: #475569;
     text-decoration: none;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    background: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
     transition: all 0.2s;
 }
 
 .page-item-custom a:hover {
     border-color: #7B3F00;
     color: #7B3F00;
-    background: #fdfcfb;
+    background: #fdfbf7;
 }
 
 .page-item-custom.active a {
     background-color: #7B3F00;
-    color: #ffffff;
     border-color: #7B3F00;
+    color: #ffffff;
 }
 
 .page-item-custom.disabled span {
+    background-color: #f1f5f9;
     color: #cbd5e1;
-    background: #f8fafc;
-    border-color: #e2e8f0;
     cursor: not-allowed;
+    border-color: #e2e8f0;
 }
 
 .pagination-info {
-    font-size: 11px;
-    color: #94a3b8;
+    font-size: 13px;
+    color: #64748b;
 }
 
-/* ── RESPONSIVE WEB DESIGN (MEDIA QUERIES) ──────────────────────────────── */
-@media screen and (max-width: 768px) {
+/* --- Responsive Breakpoints --- */
+@media (max-width: 768px) {
+    .admin-content {
+        padding: 15px;
+    }
     .filter-grid {
-        grid-template-columns: 1fr; /* Stack filter jadi 1 kolom di HP */
-        gap: 12px;
+        flex-direction: column;
+        align-items: stretch;
     }
-    
     .filter-col-buttons {
-        margin-top: 4px;
+        margin-top: 10px;
     }
-    
-    .page-title {
-        font-size: 20px;
+    .filter-col-buttons .btn-custom {
+        flex: 1;
+        justify-content: center;
+    }
+    .pagination-container {
+        flex-direction: column;
+        text-align: center;
     }
 }

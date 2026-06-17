@@ -15,7 +15,7 @@
         <div class="footer-left">
 
             <span class="footer-brand">
-                🎨 Margi Batik
+                 Margi Batik
             </span>
 
             <span class="footer-text">

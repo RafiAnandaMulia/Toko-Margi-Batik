@@ -142,7 +142,6 @@ $all_classes = dbQuery(
                                 <th>Gambar</th>
                                 <th>Prediksi</th>
                                 <th style="width: 160px;">Confidence</th>
-                                <th style="width: 110px;">Feedback</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,19 +195,6 @@ $all_classes = dbQuery(
                                             <?= number_format($row['confidence'], 1) ?>%
                                         </span>
                                     </div>
-                                </td>
-                                <td>
-                                    <?php if ($row['is_correct'] === null): ?>
-                                        <span class="badge-custom badge-status-null">Belum</span>
-                                    <?php elseif ($row['is_correct'] == 1): ?>
-                                        <span class="badge-custom badge-status-true">
-                                            <i class="bi bi-check-circle-fill"></i> Benar
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="badge-custom badge-status-false">
-                                            <i class="bi bi-x-circle-fill"></i> Salah
-                                        </span>
-                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
