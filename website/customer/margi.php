@@ -29,14 +29,8 @@ $categories = dbQuery(
 </head>
 <body>
         <?php include __DIR__ . '/../includes/navbar_customer.php'; ?>
-
-    <header class="hero">
-        <h1>MARGI BATIK</h1>
-        <p>Menemukan dan Melestarikan Mahakarya Nusantara Melalui Sistem Klasifikasi Batik Cerdas</p>
-    </header>
-
     <main class="container">
-        <h2 class="section-title">Koleksi & Karakteristik Batik</h2>
+        <h2 class="section-title"> Karakteristik Batik</h2>
         
         <div class="batik-grid">
             <?php if (!empty($categories)): ?>
@@ -82,10 +76,10 @@ $categories = dbQuery(
             </div>
             <div class="footer-info">
                 <h3>Hubungi & Kunjungi Kami</h3>
-                <p><strong>📍 Alamat Kantor & Workshop:</strong></p>
+                <p><strong>Alamat Kantor & Workshop:</strong></p>
                 <p>Jl. Margi Batik No. 45, Kompleks Sentra Kerajinan Batik, Jawa Tengah, Indonesia</p>
-                <p><strong>📞 WhatsApp / Telepon:</strong> +62 812-3456-7890</p>
-                <p><strong>✉️ Email:</strong> info@margibatik.com</p>
+                <p><strong>WhatsApp / Telepon:</strong> +62 812-3456-7890</p>
+                <p><strong> Email:</strong> info@margibatik.com</p>
             </div>
         </div>
         <div class="footer-bottom">

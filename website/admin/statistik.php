@@ -2,7 +2,7 @@
 /**
  * =============================================================
  * website/admin/statistik.php
- * Statistik dan analitik sistem klasifikasi batik
+ * Statistik dan analitik sistem klasifikasi batik (17 Kelas)
  * =============================================================
  */
 require_once __DIR__ . '/../config/database.php';
@@ -10,48 +10,50 @@ require_once __DIR__ . '/../config/session.php';
 
 requireAdmin();
 
-// ─── Statistik per kelas (Top 10) ────────────────────────
+// ─── Statistik per kelas (Mengambil seluruh 17 kelas dari riwayat) ────────────────────────
 $per_class = dbQuery(
     "SELECT predicted_class,
-            COUNT(*)                          AS total,
-            ROUND(AVG(confidence), 2)         AS avg_conf,
+            COUNT(*) AS total,
+            ROUND(IFNULL(AVG(confidence), 0), 2) AS avg_conf,
             SUM(CASE WHEN is_correct=1 THEN 1 ELSE 0 END) AS correct_count
-    FROM   classification_history
-    GROUP  BY predicted_class
-    ORDER  BY total DESC
-    LIMIT  10"
-);
+     FROM classification_history
+     GROUP BY predicted_class
+     ORDER BY total DESC"
+) ?? [];
 
 // ─── Prediksi per hari (30 hari terakhir) ────────────────
 $daily = dbQuery(
     "SELECT DATE(created_at) AS date, COUNT(*) AS total
-    FROM   classification_history
-    WHERE  created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
-    GROUP  BY DATE(created_at)
-    ORDER  BY date ASC"
-);
+     FROM   classification_history
+     WHERE  created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+     GROUP  BY DATE(created_at)
+     ORDER  BY date ASC"
+) ?? [];
 
 // ─── Ringkasan global ─────────────────────────────────────
 $summary = dbQueryOne(
     "SELECT
         COUNT(*)                                       AS total_predictions,
-        ROUND(AVG(confidence), 2)                      AS avg_confidence,
+        ROUND(IFNULL(AVG(confidence), 0), 2)           AS avg_confidence,
         COUNT(DISTINCT predicted_class)                AS unique_classes,
         SUM(CASE WHEN is_correct=1 THEN 1 ELSE 0 END) AS total_correct,
         SUM(CASE WHEN is_correct IS NOT NULL THEN 1 ELSE 0 END) AS total_feedback
-    FROM classification_history"
+     FROM classification_history"
 ) ?? [];
 
 $accuracy_rate = ($summary['total_feedback'] ?? 0) > 0
     ? round($summary['total_correct'] / $summary['total_feedback'] * 100, 1)
     : 0;
 
-// Encode JSON untuk Chart.js
-$chart_labels     = json_encode(array_column($per_class, 'predicted_class'));
-$chart_totals     = json_encode(array_map('intval', array_column($per_class, 'total')));
-$chart_conf       = json_encode(array_map('floatval', array_column($per_class, 'avg_conf')));
-$daily_labels     = json_encode(array_column($daily, 'date'));
-$daily_totals     = json_encode(array_map('intval', array_column($daily, 'total')));
+// Menghitung grand total untuk kebutuhan proporsi persentase di tabel
+$grand_total = !empty($per_class) ? array_sum(array_column($per_class, 'total')) : 0;
+
+// Encode JSON dengan proteksi array kosong agar Chart.js tidak error saat inisialisasi awal
+$chart_labels     = json_encode(!empty($per_class) ? array_column($per_class, 'predicted_class') : []);
+$chart_totals     = json_encode(!empty($per_class) ? array_map('intval', array_column($per_class, 'total')) : []);
+$chart_conf       = json_encode(!empty($per_class) ? array_map('floatval', array_column($per_class, 'avg_conf')) : []);
+$daily_labels     = json_encode(!empty($daily) ? array_column($daily, 'date') : []);
+$daily_totals     = json_encode(!empty($daily) ? array_map('intval', array_column($daily, 'total')) : []);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -127,10 +129,10 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                 <div class="charts-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
                     <div class="card">
                         <div class="card-header">
-                            <span> Prediksi Harian (30 Hari Terakhir)</span>
+                            <span>Prediksi Harian (30 Hari Terakhir)</span>
                         </div>
                         <div class="card-body">
-                            <div style="height:260px; position: relative;">
+                            <div style="height:280px; position: relative;">
                                 <canvas id="dailyChart"></canvas>
                             </div>
                         </div>
@@ -138,10 +140,10 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
 
                     <div class="card">
                         <div class="card-header">
-                            <span> Top 10 Kelas Batik</span>
+                            <span>Penyebaran 17 Kelas Batik</span>
                         </div>
                         <div class="card-body">
-                            <div style="height:260px; position: relative;">
+                            <div style="height:280px; position: relative;">
                                 <canvas id="classChart"></canvas>
                             </div>
                         </div>
@@ -151,7 +153,7 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                 <div class="content-column">
                     <div class="card">
                         <div class="card-header">
-                            <span> Detail Statistik Performa Motif Batik</span>
+                            <span>Detail Statistik Performa Motif Batik (Semua Kelas)</span>
                         </div>
                         <div class="card-body no-padding">
                             <div class="table-wrapper">
@@ -162,25 +164,25 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                                             <th>Kelas Batik</th>
                                             <th>Total Prediksi</th>
                                             <th>Rata-rata Confidence</th>
+                                            <th>Akurasi Feedback (Benar/Total)</th>
                                             <th>Proporsi Data</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $grand_total = array_sum(array_column($per_class, 'total'));
                                     foreach ($per_class as $i => $row):
                                         $pct = $grand_total > 0 ? round($row['total'] / $grand_total * 100, 1) : 0;
                                     ?>
                                     <tr>
                                         <td>
                                             <?php if ($i === 0): ?>
-                                                <span style="font-size:16px">1</span>
+                                                <span style="font-size:16px; font-weight:bold; color:#D4A017;">🥇 1</span>
                                             <?php elseif ($i === 1): ?>
-                                                <span style="font-size:16px">2</span>
+                                                <span style="font-size:16px; font-weight:bold; color:#9E9E9E;">🥈 2</span>
                                             <?php elseif ($i === 2): ?>
-                                                <span style="font-size:16px">3</span>
+                                                <span style="font-size:16px; font-weight:bold; color:#CD7F32;">🥉 3</span>
                                             <?php else: ?>
-                                                <span style="color:#aaa; font-weight: 600;"><?= $i+1 ?></span>
+                                                <span style="color:#aaa; font-weight: 600; padding-left: 4px;"><?= $i+1 ?></span>
                                             <?php endif; ?>
                                         </td>
                                         <td>
@@ -211,9 +213,10 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
+                                    
                                     <?php if (empty($per_class)): ?>
                                     <tr>
-                                        <td colspan="6" class="empty-data">Belum ada data analitik kelas batik.</td>
+                                        <td colspan="6" class="empty-data">Belum ada data analitik kelas batik di database.</td>
                                     </tr>
                                     <?php endif; ?>
                                     </tbody>
@@ -223,7 +226,9 @@ $daily_totals     = json_encode(array_map('intval', array_column($daily, 'total'
                     </div>
                 </div>
 
-            </div></div><?php include __DIR__ . '/../includes/footer.php'; ?>
+            </div>
+        </div>
+        <?php include __DIR__ . '/../includes/footer.php'; ?>
     </main>
 
 </div>
@@ -237,7 +242,7 @@ new Chart(document.getElementById('dailyChart'), {
         labels: <?= $daily_labels ?>,
         datasets: [{
             label: 'Jumlah Prediksi',
-            data: <?= $daily_totals ?>,
+            data: Guild = <?= $daily_totals ?>,
             backgroundColor: 'rgba(123, 63, 0, 0.7)',
             borderColor: '#7B3F00',
             borderWidth: 1,
@@ -258,10 +263,12 @@ new Chart(document.getElementById('dailyChart'), {
 });
 
 // ── Grafik per Kelas (Doughnut Chart) ──────────────────────
+// Palet warna diperluas menjadi 20 warna warm earth/batik agar menampung ke-17 kelas dengan baik
 const colors = [
     '#7B3F00', '#A0522D', '#D4A017', '#5C2D00', '#CD853F',
-    '#8B4513', '#f5c382', '#A0522D', '#D2691E', '#a92f2f',
-    '#7dc733', '#1e9cd2', '#c65d69', '#d22a1e', '#661ed2'
+    '#8B4513', '#F5C382', '#D2691E', '#A92F2F', '#7DC733', 
+    '#1E9CD2', '#C65D69', '#D22A1E', '#661ED2', '#8B5A2B',
+    '#B8860B', '#BC8F8F', '#DEB887', '#E9967A', '#9ACD32'
 ];
 
 new Chart(document.getElementById('classChart'), {
@@ -281,7 +288,11 @@ new Chart(document.getElementById('classChart'), {
         plugins: {
             legend: {
                 position: 'right',
-                labels: { boxWidth: 12, font: { size: 11 } }
+                labels: { 
+                    boxWidth: 10, 
+                    font: { size: 10 },
+                    padding: 6 
+                }
             }
         }
     }

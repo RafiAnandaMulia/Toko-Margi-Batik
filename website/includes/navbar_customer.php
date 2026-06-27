@@ -13,7 +13,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </div>
             <div>
                 <span class="brand-name-customer">Margi Batik</span>
-                <span class="brand-tagline">Kenali Warisanmu</span>
+                <span class="brand-tagline"></span>
             </div>
         </a>
 

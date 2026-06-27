@@ -1,5 +1,5 @@
 /* ==========================================================================
-   HALAMAN KLASIFIKASI - KOMPONEN BERKAS & PREDIKSI CNN
+   HALAMAN KLASIFIKASI - KOMPONEN BERKAS & PREDIKSI CNN (17 MOTIF)
    ========================================================================== */
 
 /* Wrapper Utama Konten */
@@ -22,7 +22,7 @@
     gap: 10px;
 }
 
-/* Kotak Pratinjau Gambar */
+/* Kotak Pratinjau Gambar Sebelum Di-upload */
 .preview-box-wrapper {
     margin-top: 16px;
     text-align: center;
@@ -42,7 +42,9 @@
     margin-top: 6px;
 }
 
-/* Kartu Utama Hasil Klasifikasi */
+/* ==========================================================================
+   KARTU UTAMA HASIL KLASIFIKASI
+   ========================================================================== */
 .result-card {
     background: #ffffff;
     border: 1px solid #e8d8c0;
@@ -107,7 +109,7 @@
     margin-bottom: 15px;
 }
 
-/* Progress Bar Keyakinan Model MobileNetV2 */
+/* Bilah Akurasi (Confidence Bar) MobileNetV2 */
 .confidence-info {
     font-size: 13px;
     font-weight: 600;
@@ -129,7 +131,9 @@
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Panel Klasifikasi Alternatif (Top Predictions) */
+/* ==========================================================================
+   PANEL PROBABILITAS MATRIKS AI (TOP PREDICTIONS)
+   ========================================================================== */
 .alt-predictions-panel {
     background: #ffffff;
     border-radius: 16px;
@@ -206,7 +210,9 @@
     min-width: 55px;
 }
 
-/* Navigasi Aksi Bawah Halaman */
+/* ==========================================================================
+   TOMBOL AKSI KUSTOM & NAVIGASI BAWAH
+   ========================================================================== */
 .action-buttons-wrapper {
     display: flex;
     gap: 15px;
@@ -218,8 +224,39 @@
 .action-buttons-wrapper a {
     text-decoration: none;
     padding: 10px 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 160px; /* Lebar seimbang untuk desktop & mobile */
+    height: 44px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 12px;
+    transition: all 0.25s ease;
 }
 
+/* Tombol Utama: Klasifikasi Lagi / Klasifikasikan Sekarang */
+.btn-primary-custom {
+    background: #7B3F00; /* Cokelat Batik */
+    color: #ffffff !important;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(123, 63, 0, 0.15);
+}
+
+.btn-primary-custom:hover {
+    background: #5C2D00; /* Cokelat Lebih Gelap */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(123, 63, 0, 0.25);
+}
+
+.btn-primary-custom:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(123, 63, 0, 0.15);
+}
+
+/* Tombol Sekunder: Lihat Riwayat (Jika Nanti Diaktifkan Kembali) */
 .action-buttons-wrapper .btn-secondary-custom {
     border: 1px solid #cbd5e1;
     background: #ffffff;
@@ -229,4 +266,5 @@
 .action-buttons-wrapper .btn-secondary-custom:hover {
     background: #f8fafc;
     color: #1e293b;
+    transform: translateY(-1px);
 }

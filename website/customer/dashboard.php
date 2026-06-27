@@ -89,7 +89,7 @@ require_once __DIR__ . '/../config/session.php';
     <section id="beranda" class="hero-section" style="padding: 60px 0;">
         <div class="page-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 40px; box-sizing: border-box;">
             <div class="hero-content" style="flex: 1; min-width: 300px;">
-                <span class="mitra-badge">✨ Mitra Resmi Penelitian</span>
+                <span class="mitra-badge"> Mitra Resmi Penelitian</span>
                 <h1 class="hero-title" style="font-size: 36px; color: #5C2D00; margin-top: 0; margin-bottom: 20px; font-weight: 800; line-height: 1.2;">
                     Klasifikasi Batik Nusantara<br>Bersama Margi Batik
                 </h1>
@@ -158,7 +158,7 @@ require_once __DIR__ . '/../config/session.php';
                     <p style="font-size:15px; color:#475569; line-height:1.6; margin: 0 0 25px 0;">
                         <strong>Alamat:</strong><br>
                          Bl. M Square, Jl. Melawai 5 No.001, RT.4/RW.1, Melawai, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12160<br>
-                        <span style="color: #7f8c8d; font-size: 13px;"></span>
+                        <span style="color: #7f8c8d; font-size: 13px;">Blok M Square, LT GF Blok B No. No 128-129</span>
                     </p>
 
                     <div style="border-top: 1px solid #eae0d5; border-bottom: 1px solid #eae0d5; padding: 20px 0; margin-bottom: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">

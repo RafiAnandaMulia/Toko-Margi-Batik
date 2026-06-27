@@ -195,8 +195,8 @@ $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/BATIK_CLASSIFICATION_SYSTEM/website/
                             ✓ Prediksi Selesai
                         </div>
                         <div style="font-size:22px; font-weight:800; color:#5C2D00; margin-bottom:10px;">
-                            <?= htmlspecialchars(str_replace('_', ' ', ucwords($result_data['predicted_class'] ?? '', '_'))) ?>
-                        </div>
+    <?= htmlspecialchars($result_data['category_info']['nama_kategori'] ?? str_replace('_', ' ', ucwords($result_data['predicted_class']))) ?>
+</div>
                         
                         <?php if ($is_low_confidence): ?>
                         <div style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; padding:12px; border-radius:10px; margin-bottom:15px; font-size:14px; font-weight:600; line-height:1.4;">
@@ -267,7 +267,6 @@ $upload_dir = $_SERVER['DOCUMENT_ROOT'] . '/BATIK_CLASSIFICATION_SYSTEM/website/
 
             <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
                 <a href="klasifikasi.php" class="btn-primary-custom" style="text-decoration:none; padding:10px 24px;">Klasifikasi Lagi</a>
-                <a href="riwayat.php" class="btn-secondary-custom" style="text-decoration:none; padding:10px 24px; border:1px solid #cbd5e1; background:#fff; color:#475569;">Lihat Riwayat</a>
             </div>
             <?php endif; ?>
 

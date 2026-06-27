@@ -1,6 +1,6 @@
 /* =====================================================
    FILE: statistik.css
-   Khusus Modul Analitik & Grafik Chart.js
+   Khusus Modul Analitik & Grafik Chart.js (Updated for 17 Classes)
 ===================================================== */
 
 /* 1. Tata Letak Fleksibel Halaman Statistik */
@@ -26,6 +26,8 @@
 .table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    max-height: 500px; /* Tambahan: Biar tabel 17 kelas bisa di-scroll jika terlalu panjang */
+    border-bottom: 1px solid #f0eae4;
 }
 
 .prediction-table {
@@ -44,6 +46,9 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-bottom: 2px solid #f0eae4;
+    position: sticky; /* Tambahan: Judul kolom tetap di atas saat tabel di-scroll */
+    top: 0;
+    z-index: 10;
 }
 
 .prediction-table td {
@@ -52,6 +57,11 @@
     font-size: 0.8rem;
     color: #4a4a4a;
     vertical-align: middle;
+}
+
+/* Tambahan: Baris selang-seling agar 17 data lebih mudah dibaca mata */
+.prediction-table tbody tr:nth-child(even) {
+    background: #fdfbfa;
 }
 
 .prediction-table tr:last-child td {
