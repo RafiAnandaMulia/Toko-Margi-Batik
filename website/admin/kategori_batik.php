@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $action = $_POST['action'] ?? '';
 
-    // =====================================================
+   // =====================================================
     // 1. TAMBAH KATEGORI 
     // =====================================================
     if ($action === 'add') {
@@ -40,16 +40,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($existing) {
                 setFlash('error', "Slug '$slug' sudah digunakan.");
-            } else {
+             } else {
+                // --- PROSES UPLOAD GAMBAR TAMBAH KATEGORI ---
+                $filename = null; // Default jika user tidak upload gambar
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+                    $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+                    if (in_array($ext, $allowed)) {
+                        $filename = uniqid('batik_') . '.' . $ext;
+                        $upload_dir = __DIR__ . '/../uploads/batik/';
+
+                        if (!is_dir($upload_dir)) {
+                            mkdir($upload_dir, 0777, true);
+                        }
+
+                        if (!move_uploaded_file($_FILES['image']['tmp_name'], $upload_dir . $filename)) {
+                            $filename = null; // Reset jika gagal upload fisik
+                        }
+                    }
+                }
+
+                // Tambahkan kolom image_path di query INSERT (sesuaikan nama kolom di databasemu jika berbeda)
                 dbInsert(
-                    "INSERT INTO batik_categories (slug, name, origin_region, description) VALUES (?, ?, ?, ?)",
-                    [$slug, $name, $region, $desc]
+                    "INSERT INTO batik_categories (slug, name, origin_region, description, image_path) VALUES (?, ?, ?, ?, ?)",
+                    [$slug, $name, $region, $desc, $filename]
                 );
                 setFlash('success', 'Kategori berhasil ditambahkan.');
             }
         }
     }
-
     // =====================================================
     // 2. EDIT KATEGORI 
     // =====================================================
@@ -273,15 +293,15 @@ $csrf  = generateCsrfToken();
         
         <div class="custom-modal-footer">
             <button type="button" id="cancelEditModal" class="btn-cancel">Batal</button>
-            <button type="submit" class="btn-save">💾 Update</button>
+            <button type="submit" class="btn-save"> Update</button>
         </div>
     </form>
 </div>
 
 <div id="addModal" class="custom-modal">
-    <form method="POST" class="custom-modal-content">
+    <form method="POST" enctype="multipart/form-data" class="custom-modal-content">
         <div class="custom-modal-header">
-            <h3>➕ Tambah Kategori Batik</h3>
+            <h3> Tambah Kategori Batik</h3>
             <button type="button" id="closeAddModal" class="modal-close">✕</button>
         </div>
         
@@ -303,6 +323,10 @@ $csrf  = generateCsrfToken();
                 <input type="text" name="origin_region" class="custom-input" placeholder="cth: Yogyakarta" maxlength="100">
             </div>
             <div class="form-group">
+                <label>Gambar Batik</label>
+                <input type="file" name="image" class="custom-input" accept="image/*">
+            </div>
+            <div class="form-group">
                 <label>Deskripsi</label>
                 <textarea name="description" class="custom-textarea" rows="4" placeholder="Deskripsi singkat tentang motif batik ini"></textarea>
             </div>
@@ -310,7 +334,7 @@ $csrf  = generateCsrfToken();
         
         <div class="custom-modal-footer">
             <button type="button" id="cancelAddModal" class="btn-cancel">Batal</button>
-            <button type="submit" class="btn-save">💾 Simpan</button>
+            <button type="submit" class="btn-save"> Simpan</button>
         </div>
     </form>
 </div>
